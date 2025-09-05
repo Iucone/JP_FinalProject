@@ -13,17 +13,26 @@ public class FireEvent : WeatherEvent
     [System.Serializable]
     public class LightData
     {
-        public Light light;
+        public Light light;        
         public float maxIntensity;
-        [HideInInspector]
-        public float intensity;
     }
 
+    [System.Serializable]
+    public class FireData
+    {
+        public ParticleSystem fire;
+
+        [HideInInspector]
+        public float minRateOverTime;
+        [HideInInspector]
+        public float maxRateOverTime;
+    }
 
 
     [Tooltip("Fire event-")]
     [SerializeField]
-    public ParticleSystem[] fires;
+    //public ParticleSystem[] fires;
+    public FireData[] fires;
     [SerializeField]
     public LightData[] lights;
      
@@ -34,17 +43,27 @@ public class FireEvent : WeatherEvent
     private EmissionModule fogEmission;
     private MainModule fogMain;
     //private bool isStopping = false;
-    private ParticleSystem.Particle[] particles;
+    
+    private CubicHermiteSpline path = new CubicHermiteSpline();
+    private List<string> prova = new List<string>();
 
-
-    public FireEvent(EventName name, string description, List<WeatherParameter> conditions) : base(name, description, conditions)
+    /*public FireEvent(EventName name, string description, List<WeatherParameter> conditions) : base(name, description, conditions)
     {
-    }
+    }*/
 
     private void Start()
     {
-        for (int i = 0; i < lights.Length; i++)
-            lights[i].light.intensity = 0f;
+        foreach (LightData ld in lights)
+        {         
+            ld.light.intensity = 0f;
+        }
+
+        foreach (FireData fd in fires)
+        {
+            EmissionModule emission = fd.fire.emission;
+            fd.minRateOverTime = emission.rateOverTime.constant * 10f / 100f;
+            fd.maxRateOverTime = emission.rateOverTime.constant;
+        }
     }
 
     private void Update()
@@ -67,8 +86,6 @@ public class FireEvent : WeatherEvent
         {
             for (int i = 0; i < lights.Length; i++)
             {
-                //float t = 1f - Mathf.Clamp01(timeElapsed / time);
-                //lights[i].light.intensity = lights[i].maxIntensity * (1.0f - timeElapsed / time);
                 lights[i].light.intensity += Time.deltaTime * 400f;
                 if (lights[i].light.intensity >= lights[i].maxIntensity)
                 {
@@ -87,9 +104,7 @@ public class FireEvent : WeatherEvent
         while (done != lights.Length)
         {
             for (int i = 0; i < lights.Length; i++)
-            {
-                //float t = 1f - Mathf.Clamp01(timeElapsed / time);
-                //lights[i].light.intensity = lights[i].maxIntensity * (1.0f - timeElapsed / time);
+            { 
                 lights[i].light.intensity -= Time.deltaTime * 400f;
                 if (lights[i].light.intensity <= 0f)
                 {
@@ -102,34 +117,13 @@ public class FireEvent : WeatherEvent
     }
 
     private void StartLights()
-    {
-
-        /*
-        for (int i = 0; i < lights.Length; i++)
-        {
-            if (lights[i].light.intensity > 0f)
-            {
-                return;
-            }
-        }
-        */
+    { 
         StopAllCoroutines();
         StartCoroutine(nameof(StartLightsCO), 2f);
     }
 
     private void StopLights()
-    {
-        /*
-        for (int i = 0; i < lights.Length; i++ )
-        {
-            if (lights[i].light.intensity > 0f)
-            {
-                StopAllCoroutines();
-                StartCoroutine(nameof(StopLightsCO), 2f);
-                break;
-            }
-        }*/
-
+    { 
         StopAllCoroutines();
         StartCoroutine(nameof(StopLightsCO), 2f);
     }
@@ -137,23 +131,23 @@ public class FireEvent : WeatherEvent
 
     public override void StartEvent()
     {
-        foreach (var f in fires)  f.Play();
+        UpdateEmissionRate();
+        foreach (var f in fires)
+        {
+            f.fire.Play();
+        }
          
         StartLights();
     }
 
     public override void StopEvent()
     {
-        for (int i = 0; i < fires.Length; i++)
+        foreach (var f in fires)
         {
-            fires[i].Stop();
+            f.fire.Stop();
         }
-         
-        StopLights();
-    }
 
-    private void FinalizeStop()
-    { 
+        StopLights();
     }
 
 
@@ -169,7 +163,11 @@ public class FireEvent : WeatherEvent
 
     private void UpdateEmissionRate()
     {
-        //rainEmission.rateOverTime = minEmissionrate + intensity * (maxEmissionRate - minEmissionrate);
+        foreach(FireData fd in fires)
+        {
+            EmissionModule emission = fd.fire.emission;
+            emission.rateOverTime = fd.minRateOverTime + intensity * (fd.maxRateOverTime - fd.minRateOverTime);
+        }
     }
 }
 

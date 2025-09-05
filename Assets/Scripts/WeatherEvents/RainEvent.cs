@@ -22,21 +22,19 @@ public class RainEvent : WeatherEvent
     private EmissionModule rainEmission;
     private EmissionModule fogEmission;
     private MainModule fogMain;    
-    //private bool isStopping = false;
-    private ParticleSystem.Particle[] particles;
+    
 
+    private CubicHermiteSpline  spline = new CubicHermiteSpline();
 
-    public RainEvent(EventName name, string description, List<WeatherParameter> conditions) : base(name, description, conditions)
+    /*public RainEvent(EventName name, string description, List<WeatherParameter> conditions) : base(name, description, conditions)
     {
-    }
+    }*/
 
     private void Start()
     {
         rainEmission = rain.emission;
         fogEmission = fog.emission;        
         fogMain = fog.main;
-
-        particles = new ParticleSystem.Particle[rain.main.maxParticles];
 
         UpdateEmissionRate();
     }

@@ -18,7 +18,7 @@ public class FireflieSpawner : MonoBehaviour
     {
         if (instance != null)
         {
-            Destroy(gameObject);
+            Destroy(this);
             return;
         }
 

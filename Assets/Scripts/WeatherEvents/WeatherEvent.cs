@@ -104,8 +104,8 @@ public abstract class WeatherEvent : MonoBehaviour
 
     protected List<WeatherParameter> weatherConditions;
     protected float intensity;
-    private EventName name;
-    private string description;
+    private EventName eventName;
+    private string eventDescription;
 
     /*
     protected ParticleSystem effectPrefab;
@@ -114,21 +114,23 @@ public abstract class WeatherEvent : MonoBehaviour
         this.effectPrefab = effectPrefab;
     }*/
 
-    public WeatherEvent(EventName name, string description, List<WeatherParameter> conditions)
+    /*
+    public WeatherEvent(EventName eventName, string eventDescription, List<WeatherParameter> conditions)
     {
-        this.name = name;
-        this.description = description;
+        print("WeatherEvent costruttore " + eventName);
+        this.eventName = eventName;
+        this.eventDescription = eventDescription;
         this.weatherConditions = conditions;
         intensity = 0.5f;
-    }
+    }*/
 
 
     public virtual bool CanActivateEvent(WeatherState weather)
     {
         return false;
     }
-    public EventName GetName() => name;
-    public string GetDescription() => description;
+    public EventName GetEventName() => eventName;
+    public string GetEventDescription() => eventDescription;
 
 
 

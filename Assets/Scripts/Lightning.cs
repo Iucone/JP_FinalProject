@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UIElements;
@@ -12,7 +13,9 @@ public class Lightning : MonoBehaviour
     public AudioClip[] lightningAudioClips;
     public AudioClip[] rumbleAudioClips;
     public Light envLight;
-    public float minTimeBetweenFlashes = 8f;
+    public float minTimeBetweenFlashes = 16f;
+    public float minTimeBetweenLightningStrike = 12f;
+    public float lightningProb = 0.001f;
     public Vector2 flashesDuration = new Vector2(1f, 5f);
 
     private float curFlashDuration;
@@ -21,11 +24,16 @@ public class Lightning : MonoBehaviour
     private float flashesEventTimeElapsed = 0f;
     private AudioSource audioSource;
     private LightFlashes lightFlashes;
+    private float lastLightningStrikeTime = 0f;
+    
+    
+    private bool isEventActive = false;
+    
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
-        lastFlashesTime = Time.time;
+    {        
         extraFlashesDelay = Random.Range(0f, 15f);
         curFlashDuration = Random.Range(flashesDuration[0], flashesDuration[1]);
 
@@ -35,10 +43,36 @@ public class Lightning : MonoBehaviour
     }
 
 
-
+    private void OnEnable()
+    {        
+    }
+     
     // Update is called once per frame
     void Update()
     {
+        if (!IsEventActive())
+        {
+            return;
+        }
+
+
+        if (Time.time - lastLightningStrikeTime > minTimeBetweenLightningStrike &&
+            Random.value < lightningProb)
+        {
+            lastLightningStrikeTime = Time.time;
+
+            lightFlashes.StartFlashes(Random.Range(flashesDuration[0], flashesDuration[1]));
+            audioSource.PlayOneShot(lightningAudioClips[Random.Range(0, lightningAudioClips.Length)]);
+
+            //StartCoroutine(nameof(SimulateFlashes));
+            int strikeNum = (int)(1 + Random.value * 3.5f);
+            //for (int i = 0; i < strikeNum; i++)
+                //  StartCoroutine(nameof(SimulateLightingStrike));
+
+            StartCoroutine(SimulateLMultipleightningStrike(strikeNum));
+        }
+
+        /*
         if (Input.GetKeyDown(KeyCode.Space))
         {
             lightFlashes.StartFlashes(Random.Range(flashesDuration[0], flashesDuration[1]));
@@ -46,7 +80,7 @@ public class Lightning : MonoBehaviour
             
             //StartCoroutine(nameof(SimulateFlashes));
             StartCoroutine(nameof(SimulateLightingStrike));
-        }
+        }*/
 
         if (Time.time - lastFlashesTime >= minTimeBetweenFlashes + extraFlashesDelay)
         {
@@ -85,8 +119,21 @@ public class Lightning : MonoBehaviour
 
     }
 
+    IEnumerator SimulateLMultipleightningStrike(int numoOfStrikes)
+    {
+        for (int i = 0; i < numoOfStrikes; i++)
+        {
+            StartCoroutine(nameof(SimulateLightningStrike));
+            yield return new WaitForSeconds(0.001f + Random.value*0.5f);
+        }
+    }
 
-    IEnumerator SimulateLightingStrike()
+
+    /*
+     * Un singolo lightning strike è creato istanziando diversi lightningPrefab a intervalli molto brevi
+     * 
+     */
+    IEnumerator SimulateLightningStrike()
     {
         int numStrikes = 15;
 
@@ -144,4 +191,18 @@ public class Lightning : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(0.04f, 0.08f));
         }
     }
+
+
+    public void StopEvent()
+    {
+        isEventActive = false;
+    }
+
+    public void StartEvent()
+    {
+        lastLightningStrikeTime = lastFlashesTime = Time.time;
+        isEventActive = true;
+    }
+
+    public bool IsEventActive() => isEventActive;
 }

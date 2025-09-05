@@ -180,6 +180,11 @@ public class CubicHermiteSpline
         this.points = positions;
     }
 
+    public void Reset()
+    {
+        points = null;
+    }
+
     
     private Vector3 Interpolate(Vector3 m0, Vector3 p0, Vector3 m1, Vector3 p1, float t, float h)
     {
