@@ -55,8 +55,8 @@ public class TornadoEvent : WeatherEvent
 
     public override void StartEvent()
     {
-        if (tornado.isPlaying)
-            return;
+        //if (tornado.isPlaying)
+          //  return;
 
         StartBackgroundAudio();
         ModifyBackgroundAudioVolume(0.5f, true, false);

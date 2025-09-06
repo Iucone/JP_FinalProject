@@ -33,7 +33,7 @@ public class WeatherController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        StartWeatherEvent(0);
     }
 
     // Update is called once per frame
@@ -55,46 +55,47 @@ public class WeatherController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            StartWeatherEvent(0);
+            StartWeatherEvent(1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            StartWeatherEvent(1);
+            StartWeatherEvent(2);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            StartWeatherEvent(2);
+            StartWeatherEvent(3);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            StartWeatherEvent(3);
+            StartWeatherEvent(4);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            StartWeatherEvent(4);
+            StartWeatherEvent(5);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            StartWeatherEvent(5);
+            StartWeatherEvent(6);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            StartWeatherEvent(6);
+            StartWeatherEvent(7);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            StartWeatherEvent(7);
+            StartWeatherEvent(8);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            StartWeatherEvent(8);
+            StartWeatherEvent(9);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            StartWeatherEvent(9);
+            StartWeatherEvent(10);
         }
         else if (Input.GetKeyDown(KeyCode.Y))
-            StopCurrentWeatherEvent();
+            StartWeatherEvent(0);
+        //StopCurrentWeatherEvent();
     }
 
 
