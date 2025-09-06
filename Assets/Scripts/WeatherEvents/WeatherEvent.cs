@@ -271,5 +271,29 @@ public abstract class WeatherEvent : MonoBehaviour
         audioSource.volume = toMax ? 1f : 0f;
         callback?.Invoke();
     }
+
+
+
+    private IEnumerator SetFloatParameterSmoothlyCR(Func<float> getter, Action<float> setter, float target, float duration)
+    {
+        float start = getter();
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float value = Mathf.Lerp(start, target, t);            
+            setter(value);
+            yield return null;
+        }
+
+        setter(target); // Assicura che il valore finale sia preciso
+    }
+
+    public void SetFloatParameterSmoothly(Func<float> getter, Action<float> setter, float target, float duration)
+    {
+        StartCoroutine(SetFloatParameterSmoothlyCR( getter, setter, target, duration));
+    }
 }
 

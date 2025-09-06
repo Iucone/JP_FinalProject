@@ -19,7 +19,7 @@ public class StormEvent : WeatherEvent
 
     private EmissionModule rainEmission;
     private EmissionModule windEmission;
-    private float envLightIntensity;
+    private float envLightDefIntensity;
     //private AudioSource audioSource;
 
 
@@ -30,7 +30,7 @@ public class StormEvent : WeatherEvent
     void Start()
     { 
         //lightningStrike.SetActive(false);
-        envLightIntensity = envLight.intensity;
+        envLightDefIntensity = envLight.intensity;
         windEmission = wind.emission;
         rainEmission = rain.emission;
         //audioSource = GetComponents<AudioSource>();
@@ -79,13 +79,17 @@ public class StormEvent : WeatherEvent
         wind.Stop();
         WeatherController.instance.ResetWindIntensity();
         //lightningStrike.SetActive(false);
-        StartCoroutine(ResetEnvLight());
+
+        //StartCoroutine(ResetEnvLight());
+        SetFloatParameterSmoothly(() => envLight.intensity, (value) => envLight.intensity = value, envLightDefIntensity, 0.5f);
+
         lightningStrike.GetComponent<Lightning>().StopEvent();
         lightningStrike.GetComponent<LightFlashes>().StopEvent();
         //StartCoroutine(ModifiyAudioVolume(audioSource, 0.5f, false, () => audioSource.Stop()));
         ModifyBackgroundAudioVolume(0.5f, false, true);
     }
 
+    /*
     IEnumerator ResetEnvLight()
     {
         float t = 0;
@@ -98,7 +102,7 @@ public class StormEvent : WeatherEvent
         }
         envLight.intensity = envLightIntensity;
     }
-
+    */
 
     protected override void IntensityUpdate()
     {

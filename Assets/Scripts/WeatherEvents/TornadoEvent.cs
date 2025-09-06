@@ -58,6 +58,10 @@ public class TornadoEvent : WeatherEvent
         if (tornado.isPlaying)
             return;
 
+        StartBackgroundAudio();
+        ModifyBackgroundAudioVolume(0.5f, true, false);
+
+
         tornado.transform.position = startingPosition;
         CreateRandomPath(path, startingPosition, numOfPathPoints);
         UpdateSpeed();
@@ -71,6 +75,8 @@ public class TornadoEvent : WeatherEvent
 
     public override void StopEvent()
     {
+        ModifyBackgroundAudioVolume(0.5f, false, true);
+
         tornado.Stop();
         foreach (var wind in winds) wind.Stop();
         WeatherController.instance.ResetWindIntensity();
