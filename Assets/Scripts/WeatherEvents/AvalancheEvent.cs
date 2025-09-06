@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Audio;
 using static UnityEngine.ParticleSystem;
 
 public class AvalancheEvent : WeatherEvent
@@ -11,7 +12,7 @@ public class AvalancheEvent : WeatherEvent
     [SerializeField]
     public ParticleSystem[] avalanche;
 
-    
+    //private AudioSource audioSource;
 
     /*public RainEvent(EventName name, string description, List<WeatherParameter> conditions) : base(name, description, conditions)
     {
@@ -19,6 +20,8 @@ public class AvalancheEvent : WeatherEvent
 
     private void Start()
     {
+        //audioSource = GetComponent<AudioSource>();
+        //audioSource.volume = 0f;
     }
 
     private void Update()
@@ -37,6 +40,12 @@ public class AvalancheEvent : WeatherEvent
         foreach (ParticleSystem p in avalanche)
             p.Play();
         WeatherController.instance.SetWindIntensity(1f);
+
+        //if (!audioSource.isPlaying)
+        //  audioSource.Play();
+        //StartCoroutine(ModifyAudioVolume(audioSource, 0.5f, true));
+        StartBackgroundAudio();
+        ModifyBackgroundAudioVolume(0.5f, true, false);
     }
 
     public override void StopEvent()
@@ -44,6 +53,9 @@ public class AvalancheEvent : WeatherEvent
         foreach (ParticleSystem p in avalanche)
             p.Stop();
         WeatherController.instance.ResetWindIntensity();
+
+        //StartCoroutine(ModifyAudioVolume(audioSource, 0.5f, false, () => audioSource.Stop()));
+        ModifyBackgroundAudioVolume(0.5f, false, true);
     }
 
 

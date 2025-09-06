@@ -55,55 +55,64 @@ public class WeatherController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            StopCurrentWeatherEvent();
-            weatherEvents[0].StartEvent();
-            activeWeaterEventIndex = 0;
+            StartWeatherEvent(0);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            StopCurrentWeatherEvent();
-            weatherEvents[1].StartEvent();
-            activeWeaterEventIndex = 1;
+            StartWeatherEvent(1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            StopCurrentWeatherEvent();
-            weatherEvents[2].StartEvent();
-            activeWeaterEventIndex = 2;
+            StartWeatherEvent(2);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            StopCurrentWeatherEvent();
-            weatherEvents[3].StartEvent();
-            activeWeaterEventIndex = 3;
+            StartWeatherEvent(3);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            StopCurrentWeatherEvent();
-            weatherEvents[4].StartEvent();
-            activeWeaterEventIndex = 4;
+            StartWeatherEvent(4);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            StopCurrentWeatherEvent();
-            weatherEvents[5].StartEvent();
-            activeWeaterEventIndex = 5;
+            StartWeatherEvent(5);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            StopCurrentWeatherEvent();
-            weatherEvents[6].StartEvent();
-            activeWeaterEventIndex = 6;
+            StartWeatherEvent(6);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            StartWeatherEvent(7);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            StartWeatherEvent(8);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            StartWeatherEvent(9);
         }
         else if (Input.GetKeyDown(KeyCode.Y))
             StopCurrentWeatherEvent();
     }
 
 
+    private void StartWeatherEvent(int index)
+    {
+        if (index == activeWeaterEventIndex)
+            return;
+
+        StopCurrentWeatherEvent();
+        weatherEvents[index].StartEvent();
+        activeWeaterEventIndex = index;
+    }
+
     private void StopCurrentWeatherEvent()
     {
         if (activeWeaterEventIndex != -1)
             weatherEvents[activeWeaterEventIndex].StopEvent();
+        activeWeaterEventIndex = -1;
     }
 
 

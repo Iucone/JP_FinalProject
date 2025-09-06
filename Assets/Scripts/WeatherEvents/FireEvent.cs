@@ -138,6 +138,9 @@ public class FireEvent : WeatherEvent
         }
          
         StartLights();
+
+        StartBackgroundAudio();
+        ModifyBackgroundAudioVolume(0.5f, true, false);
     }
 
     public override void StopEvent()
@@ -148,6 +151,8 @@ public class FireEvent : WeatherEvent
         }
 
         StopLights();
+
+        ModifyBackgroundAudioVolume(0.5f, false, true);
     }
 
 

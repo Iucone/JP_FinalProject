@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
 
@@ -12,11 +11,12 @@ public class WindEvent : WeatherEvent
 
     public float minEmissionrate = 20;
     public float maxEmissionRate = 100;
-
+    
 
 
     private EmissionModule windEmission, debrisEmission;
     private CubicHermiteSpline spline = new CubicHermiteSpline();
+    //private AudioSource audioSource;
 
     /*public RainEvent(EventName name, string description, List<WeatherParameter> conditions) : base(name, description, conditions)
     {
@@ -27,6 +27,8 @@ public class WindEvent : WeatherEvent
         windEmission = wind.emission;
         debrisEmission = debris.emission;
         
+        //audioSource = GetComponent<AudioSource>();
+        //audioSource.volume = 0f;
 
         UpdateEmissionRate();
     }
@@ -48,6 +50,14 @@ public class WindEvent : WeatherEvent
         debris.Play();
         //SetIntensity(1.0f);
         WeatherController.instance.SetWindIntensity(0.5f + WeatherController.instance.GetEventIntensity()*0.5f);
+
+        //if (!audioSource.isPlaying)
+        //audioSource.Play();
+        //StartCoroutine(ModifyAudioVolume(audioSource, 0.5f, true));
+
+
+        StartBackgroundAudio();
+        ModifyBackgroundAudioVolume(0.5f, true, false);
     }
 
     public override void StopEvent()
@@ -60,6 +70,9 @@ public class WindEvent : WeatherEvent
         wind.Stop();
         debris.Stop();        
         WeatherController.instance.ResetWindIntensity();
+        
+        //StartCoroutine(ModifyAudioVolume(audioSource, 0.5f, false, ()=>audioSource.Stop()));
+        ModifyBackgroundAudioVolume(0.5f, false, true);
     }
 
 

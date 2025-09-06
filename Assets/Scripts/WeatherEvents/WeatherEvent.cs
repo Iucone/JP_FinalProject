@@ -1,4 +1,6 @@
 
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -106,6 +108,27 @@ public abstract class WeatherEvent : MonoBehaviour
     protected float intensity;
     private EventName eventName;
     private string eventDescription;
+    protected AudioSource[] backgroundAudioSources;
+
+
+    protected void SetBackgroundAudioVolume(float volume)
+    {
+        if (backgroundAudioSources == null)
+            return;
+
+        foreach (AudioSource audioSource in backgroundAudioSources)
+        {
+            audioSource.volume = volume;
+        }
+    }
+     
+
+    private void Awake()
+    {
+        backgroundAudioSources = GetComponents<AudioSource>();
+        SetBackgroundAudioVolume(0f);
+    }
+
 
     /*
     protected ParticleSystem effectPrefab;
@@ -149,5 +172,104 @@ public abstract class WeatherEvent : MonoBehaviour
     public abstract void StartEvent();
     public abstract void StopEvent();
     public abstract bool IsEventActive();
+
+
+    protected void StartBackgroundAudio()
+    {
+        if (backgroundAudioSources == null)
+            return;
+
+        for (int i = 0; i < backgroundAudioSources.Length; i++)
+            backgroundAudioSources[i].Play();
+    }
+     
+    void ModifyVolumeCallback(AudioSource audioSource, bool stopWhenMuted)
+    {
+        if (stopWhenMuted)
+        {
+            if (audioSource.volume == 0f)
+                audioSource.Stop();
+        }
+    }
+
+    
+
+    protected void ModifyBackgroundAudioVolume(float duration, bool toMax, bool stopWhenMuted, float updateFreq = 20f)
+    {
+        if (backgroundAudioSources == null)
+            return;
+
+        Action<AudioSource, bool> callback = (audioSource, stopWhenMuted) =>
+        {
+            if (stopWhenMuted && audioSource.volume == 0f)
+                audioSource.Stop();
+        };
+
+        for (int i = 0; i < backgroundAudioSources.Length; i++)
+        {
+            StartCoroutine(ModifyAudioVolume(backgroundAudioSources[i], duration, toMax, stopWhenMuted,
+                callback,
+                updateFreq));
+        }
+    }
+
+
+
+    protected IEnumerator ModifyAudioVolume(AudioSource audioSource, float duration, bool toMax, bool stopWhenMuted,
+        //Action callback = null, 
+        System.Action<AudioSource, bool> callback,
+        float updateFreq = 20f)
+    {
+        if (updateFreq <= 0f)
+            updateFreq = 1f;
+
+        float te = 0f;
+        float deltaVol;
+        if (toMax)
+            deltaVol = (1f - audioSource.volume) / (duration * updateFreq);
+        else
+            deltaVol = -audioSource.volume / (duration * updateFreq);
+
+        updateFreq = 1f / updateFreq;
+
+
+        while (te < duration)
+        {
+            audioSource.volume += deltaVol;
+            yield return new WaitForSeconds(updateFreq);
+            te += updateFreq;
+
+        }
+        audioSource.volume = toMax ? 1f : 0f;
+        callback?.Invoke(audioSource, stopWhenMuted);
+    }
+
+    protected IEnumerator ModifyAudioVolume(AudioSource audioSource, float duration, bool toMax, 
+        Action callback = null,         
+        float updateFreq = 20f)
+    {
+        if (updateFreq <= 0f)
+            updateFreq = 1f;
+
+        float te = 0f;
+        float deltaVol;
+        if (toMax)
+            deltaVol = (1f - audioSource.volume) / (duration * updateFreq);
+        else
+            deltaVol = -audioSource.volume / (duration * updateFreq);
+
+        updateFreq = 1f / updateFreq;
+
+
+        while (te < duration)
+        {
+            audioSource.volume += deltaVol;
+            yield return new WaitForSeconds(updateFreq);
+            te += updateFreq;
+
+        }
+        audioSource.volume = toMax ? 1f : 0f;
+        callback?.Invoke();
+    }
 }
 

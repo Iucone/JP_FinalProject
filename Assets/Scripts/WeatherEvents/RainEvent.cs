@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -10,15 +11,16 @@ public class RainEvent : WeatherEvent
 {
     [Tooltip("Rain particle system with a fog-like particle system as a child")]
     [SerializeField]
-    public ParticleSystem rain;
+    private ParticleSystem rain;
     [SerializeField]
-    public ParticleSystem fog;
+    private ParticleSystem fog; 
+    [SerializeField]
+    private float minEmissionrate = 200;
+    [SerializeField]
+    private float maxEmissionRate = 1500;
 
-    public float minEmissionrate = 200;
-    public float maxEmissionRate = 1500;
 
-
-    
+//    private AudioSource audioSource;
     private EmissionModule rainEmission;
     private EmissionModule fogEmission;
     private MainModule fogMain;    
@@ -35,34 +37,16 @@ public class RainEvent : WeatherEvent
         rainEmission = rain.emission;
         fogEmission = fog.emission;        
         fogMain = fog.main;
+        
+        /*audioSource = GetComponent<AudioSource>();
+        if (audioSource != null )
+            audioSource.volume = 0f;*/
 
         UpdateEmissionRate();
     }
 
     private void Update()
     {
-        /*if (!IsEventActive())
-        {
-            return;
-        }*/
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            if (!IsEventActive())
-                StartEvent();
-            else
-                StopEvent();
-        }
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            intensity += 0.1f;
-            SetIntensity(intensity);
-        }
-        else if (Input.GetKeyDown(KeyCode.Q))
-        {
-            intensity -= 0.1f;
-            SetIntensity(intensity);
-        }
     }
 
 
@@ -70,6 +54,7 @@ public class RainEvent : WeatherEvent
     {
         return false;
     }
+
 
 
     public override void StartEvent()
@@ -82,7 +67,26 @@ public class RainEvent : WeatherEvent
         rain.Play();
         fog.Play();
         SetIntensity(1.0f);
+        //audioSource.Play();
+        /*
+        if (audioSource != null)
+        {
+            if (!audioSource.isPlaying)
+                audioSource.Play();
+
+            StartCoroutine(ModifyAudioVolume(audioSource, 0.5f, true));
+        }*/
+        StartBackgroundAudio();
+        ModifyBackgroundAudioVolume(0.5f, true, false);
     }
+
+    void StopAudiosource()
+    {
+        //print("StoppingAudiosource");
+        //audioSource.Stop();
+    }
+
+
 
     public override void StopEvent()
     {
@@ -94,6 +98,12 @@ public class RainEvent : WeatherEvent
         rain.Stop();
         fog.Stop();
         fogMain.simulationSpeed = 2f;
+        //audioSource.Stop();
+        //if (audioSource != null)
+        //  StartCoroutine(ModifyAudioVolume(audioSource, 0.5f, false, StopAudiosource));
+        //() => audioSource.Stop());:;);
+        ModifyBackgroundAudioVolume(0.5f, false, true);
+
 
         /*
         rainEmission.rateOverTime = 0f;
@@ -110,12 +120,6 @@ public class RainEvent : WeatherEvent
         */
     }
 
-    private void FinalizeStop()
-    {
-        rain.gameObject.SetActive(false);
-        //isStopping = false;
-        fogMain.simulationSpeed = 1f;
-    }
 
 
     protected override void IntensityUpdate()
