@@ -22,10 +22,7 @@ public class StormEvent : WeatherEvent
     private float envLightDefIntensity;
     //private AudioSource audioSource;
 
-
-    /*public FireEvent(EventName name, string description, List<WeatherParameter> conditions) : base(name, description, conditions)
-    {
-    }*/
+     
 
     void Start()
     { 
@@ -104,9 +101,8 @@ public class StormEvent : WeatherEvent
     }
     */
 
-    protected override void IntensityUpdate()
+    protected override void IntensityUpdate(float intensity)
     {
-        UpdateEmissionRate();
     }
 
     public override bool IsEventActive()
@@ -114,17 +110,7 @@ public class StormEvent : WeatherEvent
         return false;
     }
 
-    private void UpdateEmissionRate()
-    {
 
-        //EmissionModule emission = rain.emission;
-        //emission.rateOverTime
-
-        /*foreach (FireData fd in fires)
-        {
-            EmissionModule emission = fd.fire.emission;
-            emission.rateOverTime = fd.minRateOverTime + intensity * (fd.maxRateOverTime - fd.minRateOverTime);
-        }*/
-    }
+    public override bool AllowIntensityChange() => false;
 }
 

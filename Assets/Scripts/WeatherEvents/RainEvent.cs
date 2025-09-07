@@ -26,12 +26,6 @@ public class RainEvent : WeatherEvent
     private MainModule fogMain;    
     
 
-    private CubicHermiteSpline  spline = new CubicHermiteSpline();
-
-    /*public RainEvent(EventName name, string description, List<WeatherParameter> conditions) : base(name, description, conditions)
-    {
-    }*/
-
     private void Start()
     {
         rainEmission = rain.emission;
@@ -42,7 +36,7 @@ public class RainEvent : WeatherEvent
         if (audioSource != null )
             audioSource.volume = 0f;*/
 
-        UpdateEmissionRate();
+        UpdateEmissionRate(WeatherController.instance.GetEventIntensity());
     }
 
     private void Update()
@@ -61,7 +55,7 @@ public class RainEvent : WeatherEvent
     {
         //if (isStopping)
         //  return;
-
+        IntensityUpdate(WeatherController.instance.GetEventIntensity());
         //rain.gameObject.SetActive(true);
         fogMain.simulationSpeed = 1f;
         rain.Play();
@@ -122,9 +116,9 @@ public class RainEvent : WeatherEvent
 
 
 
-    protected override void IntensityUpdate()
+    protected override void IntensityUpdate(float intensity)
     {
-        UpdateEmissionRate();
+        UpdateEmissionRate(intensity);
     }
 
     public override bool IsEventActive()
@@ -132,9 +126,11 @@ public class RainEvent : WeatherEvent
         return rain.gameObject.activeSelf;
     }
 
-    private void UpdateEmissionRate()
+    private void UpdateEmissionRate(float intensity)
     {
         rainEmission.rateOverTime = minEmissionrate + intensity * (maxEmissionRate - minEmissionrate);
     }
+
+    public override bool AllowIntensityChange() => true;
 }
 

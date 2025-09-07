@@ -4,6 +4,7 @@ using UnityEngine.Rendering;
 public class TornadoEvent : WeatherEvent
 {
     public ParticleSystem tornado;
+    public ParticleSystem rain;
     public ParticleSystem[] winds;
     public Vector2 sceneCenter = new Vector2(32f, 26f);
     public float radius = 12f;
@@ -15,12 +16,7 @@ public class TornadoEvent : WeatherEvent
     private Vector3 targetPos;
     private CubicHermiteSpline path = new CubicHermiteSpline();
     private float positionAlongPath = 0f;
-
-
-    /*public TornadoEvent(EventName name, string description, List<WeatherParameter> conditions) : base(name, description, conditions)
-    {
-    }*/
-
+     
     void Start()
     {
         startingPosition = tornado.transform.position;
@@ -67,9 +63,9 @@ public class TornadoEvent : WeatherEvent
         UpdateSpeed();
 
 
-        UpdateEmissionRate();
         tornado.Play();
         foreach (var wind in winds) wind.Play();
+        rain.Play();
         WeatherController.instance.SetWindIntensity(1f);
     }
 
@@ -79,27 +75,21 @@ public class TornadoEvent : WeatherEvent
 
         tornado.Stop();
         foreach (var wind in winds) wind.Stop();
+        rain.Stop();
+
         WeatherController.instance.ResetWindIntensity();
         path.Reset();
     }
 
 
-    protected override void IntensityUpdate()
+    protected override void IntensityUpdate(float intensity)
     {
-        //UpdateEmissonRate();
     }
 
     public override bool IsEventActive()
     {
         return false;
     }
-
-    private void UpdateEmissionRate()
-    { 
-    }
-
-
-
 
 
     private Vector3 ComputeNewTargetPos(Vector3 curPosition)
@@ -172,5 +162,8 @@ public class TornadoEvent : WeatherEvent
     {
         curSpeed = 1.0f / (float)path.GetPointCount() * speed;
     }
+
+
+    public override bool AllowIntensityChange() => false;
 }
 

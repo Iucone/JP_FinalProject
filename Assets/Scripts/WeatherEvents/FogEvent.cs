@@ -18,7 +18,7 @@ public class FogEvent : WeatherEvent
     private void Start()
     {
         fogEmission = fog.emission;
-        UpdateEmissionRate();        
+        //UpdateEmissionRate(WeatherController.instance.GetEventIntensity());        
     }
 
     private void Update()
@@ -42,13 +42,14 @@ public class FogEvent : WeatherEvent
 
     public override void StartEvent()
     {
+
         stopped = false;
         fog.Play();
         var main = fog.main;
         main.simulationSpeed = 2.5f;
         Invoke(nameof(SlowDownSimulation), 3f);
         StartBackgroundAudio();
-        IntensityUpdate();
+        IntensityUpdate(WeatherController.instance.GetEventIntensity());
         ModifyBackgroundAudioVolume(0.5f, true, false);
     }
 
@@ -62,9 +63,9 @@ public class FogEvent : WeatherEvent
     }
 
 
-    protected override void IntensityUpdate()
+    protected override void IntensityUpdate(float intensity)
     {
-        UpdateEmissionRate();
+        UpdateEmissionRate(intensity);
 
         //float inte = GetIntensity();
         //var main = fog.main;
@@ -80,9 +81,12 @@ public class FogEvent : WeatherEvent
         return fog.isPlaying;
     }
 
-    private void UpdateEmissionRate()
+    private void UpdateEmissionRate(float intensity)
     {
         fogEmission.rateOverTime = minEmissionRate + intensity * (maxEmissionRate - minEmissionRate);
     }
+
+
+    public override bool AllowIntensityChange() => true;
 }
 

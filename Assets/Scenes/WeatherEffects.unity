@@ -6887,6 +6887,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ca9fdcdf50ea674e8b811250f2d0b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 0
+  eventDescription: 
   fog: {fileID: 208989814}
 --- !u!1 &218064266
 GameObject:
@@ -7132,6 +7134,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d84e24baba001649a243918ab5a4f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 3
+  eventDescription: A storm is a powerful atmospheric disturbance marked by strong
+    winds, heavy precipitation, and often thunder and lightning. It typically forms
+    when warm, moist air rises and collides with cooler, dry air, creating a low-pressure
+    system. This instability triggers cloud formation, wind circulation, and intense
+    weather activity, especially along frontal boundaries or in regions with sharp
+    temperature contrasts.
   rain: {fileID: 1219220209}
   wind: {fileID: 1150297254}
   fog: {fileID: 2082010414}
@@ -13068,6 +13077,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a396168b08ff1e4585fe866f81b0cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 0
+  eventDescription: 
   wind: {fileID: 428749481}
   debris: {fileID: 1431793796}
   minEmissionrate: 20
@@ -23927,6 +23938,113 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1001 &542415816
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 790735092}
+    m_Modifications:
+    - target: {fileID: 3115045485851964421, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589339894811251729, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -18.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589339894811251729, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589339894811251729, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.200001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589339894811251729, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589339894811251729, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589339894811251729, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589339894811251729, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589339894811251729, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589339894811251729, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589339894811251729, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421473006018704872, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: m_Name
+      value: RainV2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421473006018704872, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539631477341991169, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539631477341991169, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: simulationSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539631477341991169, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8876650490744890988, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: lengthInSec
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8876650490744890988, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8876650490744890988, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8876650490744890988, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 2500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8876650490744890988, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8876650490744890988, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.019607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 8876650490744890988, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+      propertyPath: SubModule.subEmitters.Array.data[0].emitter
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 1502204995484116362, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+    - {fileID: 3214455856544493421, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
 --- !u!1001 &546952745
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24994,10 +25112,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88b1d3f6da1e46043afaf2926ed44c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 9
+  eventDescription: Cloud shadows are a striking visual phenomenon that occurs on
+    sunny days when fast-moving clouds partially block sunlight, casting shifting
+    patches of shade across the ground. These shadows form when sunlight passes through
+    gaps in the cloud cover, creating a dynamic interplay of light and dark. The
+    effect is most visible in open landscapes under scattered cumulus clouds, with
+    strong sunlight and moderate wind speeds that propel the clouds swiftly across
+    the sky.
   clouds: {fileID: 786148870}
   debris: {fileID: 1431793796}
   wind: {fileID: 0}
   envLight: {fileID: 701867871}
+  minMaxCloudsSpeed:
+    minValue: 1
+    maxValue: 3
 --- !u!82 &786148872
 AudioSource:
   m_ObjectHideFlags: 0
@@ -25214,6 +25343,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a396168b08ff1e4585fe866f81b0cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 6
+  eventDescription: 'A moderate to strong wind event occurs when sustained wind speeds
+    range between 20 and 40 kilometers per hour (13 to 25 miles per hour), often
+    accompanied by gusts. These conditions typically arise from pressure differences
+    between air masses, intensified by atmospheric instability or approaching weather
+    fronts. Such winds can sway branches, raise dust, and affect walking comfort,
+    especially in open areas. '
   wind: {fileID: 788790242}
   debris: {fileID: 1064580455}
   minEmissionrate: 20
@@ -25347,6 +25483,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 898072806}
   - {fileID: 535548135}
   - {fileID: 855187834}
   - {fileID: 5404467367658801947}
@@ -25364,7 +25501,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df08c30b324a1bd4c84895e956f98f64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 4
+  eventDescription: "A tornado is a violently rotating column of air that extends
+    from a thunderstorm cloud to the ground. It forms when warm, moist air near the
+    surface meets cold, dry air above, creating strong instability. If wind shear
+    is present\u2014meaning winds change direction and speed with height\u2014a rotating
+    updraft called a mesocyclone can develop, which may tighten and descend to form
+    a tornado. These events are most common during spring and summer in regions prone
+    to severe storms. "
   tornado: {fileID: 5404467367658801949}
+  rain: {fileID: 898072808}
   winds:
   - {fileID: 535548137}
   - {fileID: 855187836}
@@ -35551,6 +35697,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35e087cfaa0f57244b67615777188d3e, type: 3}
+--- !u!4 &898072806 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5589339894811251729, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+  m_PrefabInstance: {fileID: 542415816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &898072808 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8876650490744890988, guid: 5ee68325b591ea649b34b55b2a822004, type: 3}
+  m_PrefabInstance: {fileID: 542415816}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &906704999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46913,6 +47069,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eed8c8a45ebdce4aa6b0a3a0daa892d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 7
+  eventDescription: "A wildfire is an uncontrolled fire that spreads rapidly through
+    vegetation such as forests, grasslands, or brush. It typically ignites under
+    hot, dry, and windy conditions, which dry out fuels like leaves, branches, and
+    dead wood. Natural causes like lightning or human activity\u2014such as unattended
+    campfires or sparks\u2014can trigger ignition. Once started, the fire's intensity
+    and spread are influenced by terrain, fuel availability, and weather patterns."
   fires:
   - fire: {fileID: 470497804}
     minRateOverTime: 0
@@ -54029,6 +54192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a396168b08ff1e4585fe866f81b0cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 0
+  eventDescription: 
   wind: {fileID: 1583645454}
   debris: {fileID: 877556447}
   minEmissionrate: 20
@@ -54336,6 +54501,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ca9fdcdf50ea674e8b811250f2d0b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 1
+  eventDescription: 'Fog is a low-lying cloud formed when water vapor condenses into
+    tiny droplets suspended near the ground. It typically occurs when the air is
+    cool and humid, and the temperature drops to the dew point, allowing saturation.
+    Calm winds and stable atmospheric conditions help the fog to develop and persist,
+    often reducing visibility significantly. '
   fog: {fileID: 1614620326}
 --- !u!82 &1614620329
 AudioSource:
@@ -54654,7 +54825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7839517721310428980, guid: 016510f3022cd5d4589c57eca4fe5686, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7839517721310428980, guid: 016510f3022cd5d4589c57eca4fe5686, type: 3}
       propertyPath: ShapeModule.randomPositionAmount
@@ -60972,6 +61143,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d68d7cd35d157940a1b99f13e88f6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 0
+  eventDescription: A mild climate is characterized by moderate temperatures, light
+    winds, and minimal precipitation, creating consistently pleasant weather conditions.
+    It typically occurs in regions influenced by nearby oceans or lakes, which help
+    regulate temperature extremes. Stable atmospheric pressure, balanced humidity,
+    and the absence of strong weather fronts contribute to the calm and comfortable
+    nature of mild climates.
 --- !u!1001 &1823030732
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61764,10 +61942,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88b1d3f6da1e46043afaf2926ed44c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 9
+  eventDescription: Cloud shadows are a striking visual phenomenon that occurs on
+    sunny days when fast-moving clouds partially block sunlight, casting shifting
+    patches of shade across the ground. These shadows form when sunlight passes through
+    gaps in the cloud cover, creating a dynamic interplay of light and dark. The
+    effect is most visible in open landscapes under scattered cumulus clouds, with
+    strong sunlight and moderate wind speeds that propel the clouds swiftly across
+    the sky.
   clouds: {fileID: 2014008477}
   debris: {fileID: 877556447}
   wind: {fileID: 0}
   envLight: {fileID: 701867871}
+  minMaxCloudsSpeed:
+    minValue: 0
+    maxValue: 0
 --- !u!4 &2014008475 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8486928416726507980, guid: 016510f3022cd5d4589c57eca4fe5686, type: 3}
@@ -63544,6 +63733,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a5ad9f043348340a2ce1eb01ab9509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 2
+  eventDescription: Rain is a form of precipitation that occurs when water vapor
+    in the atmosphere condenses into droplets, forming clouds. When these droplets
+    grow large enough, gravity pulls them down to Earth as rain. This process typically
+    requires moist air, cooling temperatures, and sufficient atmospheric instability
+    to trigger condensation and droplet formation.
   rain: {fileID: 4581257071738571417}
   fog: {fileID: 1689631119}
   minEmissionrate: 200
@@ -64166,6 +64361,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a5ad9f043348340a2ce1eb01ab9509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 5
+  eventDescription: "Snowfall is a type of precipitation that occurs when atmospheric
+    water vapor crystallizes into ice flakes and falls to the ground. For snow to
+    form, the air must be cold enough\u2014typically below 0\xB0C\u2014and contain
+    sufficient moisture. Stable conditions with rising air and low temperatures throughout
+    the cloud layer allow snowflakes to develop and reach the surface without melting."
   rain: {fileID: 5697643286824388049}
   fog: {fileID: 775197955}
   minEmissionrate: 200
@@ -64423,6 +64624,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d836b5e1a5399343922bcadb8b88ca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventName: 8
+  eventDescription: "A snow avalanche is a rapid flow of snow down a mountain slope,
+    triggered when a layer of unstable snow breaks loose and slides over a weaker
+    layer beneath. Avalanches typically occur on slopes between 30\xB0 and 45\xB0,
+    especially after heavy snowfall, strong winds, or sudden temperature changes.
+    Factors like terrain, snowpack structure, and external triggers\u2014such as
+    skiers or falling ice\u2014can all contribute to their formation."
   avalanche:
   - {fileID: 7104436162401641538}
   - {fileID: 288557475}

@@ -34,7 +34,7 @@ public class DefaultEvent : WeatherEvent
     }
 
 
-    protected override void IntensityUpdate()
+    protected override void IntensityUpdate(float intensity)
     {
     }
 
@@ -43,8 +43,6 @@ public class DefaultEvent : WeatherEvent
         return isEventActive;
     }
 
-    private void UpdateEmissionRate()
-    {
-    }
+    public override bool AllowIntensityChange() => false;
 }
 

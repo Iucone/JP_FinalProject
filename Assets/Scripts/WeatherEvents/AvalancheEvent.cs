@@ -11,17 +11,12 @@ public class AvalancheEvent : WeatherEvent
     [Tooltip("Avalanche")]
     [SerializeField]
     public ParticleSystem[] avalanche;
+     
 
-    //private AudioSource audioSource;
 
-    /*public RainEvent(EventName name, string description, List<WeatherParameter> conditions) : base(name, description, conditions)
-    {
-    }*/
 
     private void Start()
     {
-        //audioSource = GetComponent<AudioSource>();
-        //audioSource.volume = 0f;
     }
 
     private void Update()
@@ -41,9 +36,6 @@ public class AvalancheEvent : WeatherEvent
             p.Play();
         WeatherController.instance.SetWindIntensity(1f);
 
-        //if (!audioSource.isPlaying)
-        //  audioSource.Play();
-        //StartCoroutine(ModifyAudioVolume(audioSource, 0.5f, true));
         StartBackgroundAudio();
         ModifyBackgroundAudioVolume(0.5f, true, false);
     }
@@ -53,15 +45,13 @@ public class AvalancheEvent : WeatherEvent
         foreach (ParticleSystem p in avalanche)
             p.Stop();
         WeatherController.instance.ResetWindIntensity();
-
-        //StartCoroutine(ModifyAudioVolume(audioSource, 0.5f, false, () => audioSource.Stop()));
+        
         ModifyBackgroundAudioVolume(0.5f, false, true);
     }
 
 
-    protected override void IntensityUpdate()
+    protected override void IntensityUpdate(float intensity)
     {
-        //UpdateEmissionRate();
     }
 
     public override bool IsEventActive()
@@ -69,8 +59,7 @@ public class AvalancheEvent : WeatherEvent
         return avalanche[0].isPlaying;
     }
 
-    private void UpdateEmissionRate()
-    {        
-    }
+
+    public override bool AllowIntensityChange() => false;
 }
 

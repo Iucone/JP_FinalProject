@@ -105,8 +105,14 @@ public class WeatherController : MonoBehaviour
             return;
 
         StopCurrentWeatherEvent();
+
+        eventIntensity = 1f;
+
         weatherEvents[index].StartEvent();
         activeWeaterEventIndex = index;
+
+        print("Weather Event: " + weatherEvents[index].GetEventName().ToString());
+        print("Weather description: " + weatherEvents[index].GetEventDescription());
     }
 
     private void StopCurrentWeatherEvent()

@@ -16,21 +16,13 @@ public class WindEvent : WeatherEvent
 
     private EmissionModule windEmission, debrisEmission;
     private CubicHermiteSpline spline = new CubicHermiteSpline();
-    //private AudioSource audioSource;
+     
 
-    /*public RainEvent(EventName name, string description, List<WeatherParameter> conditions) : base(name, description, conditions)
-    {
-    }*/
 
     private void Start()
     {
         windEmission = wind.emission;
         debrisEmission = debris.emission;
-        
-        //audioSource = GetComponent<AudioSource>();
-        //audioSource.volume = 0f;
-
-        UpdateEmissionRate();
     }
 
     private void Update()
@@ -46,39 +38,28 @@ public class WindEvent : WeatherEvent
 
     public override void StartEvent()
     {
+        IntensityUpdate(WeatherController.instance.GetEventIntensity());
+
         wind.Play();
         debris.Play();
-        //SetIntensity(1.0f);
-        WeatherController.instance.SetWindIntensity(0.5f + WeatherController.instance.GetEventIntensity()*0.5f);
-
-        //if (!audioSource.isPlaying)
-        //audioSource.Play();
-        //StartCoroutine(ModifyAudioVolume(audioSource, 0.5f, true));
-
 
         StartBackgroundAudio();
         ModifyBackgroundAudioVolume(0.5f, true, false);
     }
 
     public override void StopEvent()
-    {
-        //if (isStopping)
-        //  return;
-
-        //isStopping = true;
-
+    { 
         wind.Stop();
         debris.Stop();        
-        WeatherController.instance.ResetWindIntensity();
+        WeatherController.instance.ResetWindIntensity();       
         
-        //StartCoroutine(ModifyAudioVolume(audioSource, 0.5f, false, ()=>audioSource.Stop()));
         ModifyBackgroundAudioVolume(0.5f, false, true);
     }
 
 
-    protected override void IntensityUpdate()
+    protected override void IntensityUpdate(float intensity)
     {
-        UpdateEmissionRate();
+        UpdateEmissionRate(intensity);
         WeatherController.instance.SetWindIntensity(0.5f + WeatherController.instance.GetEventIntensity() * 0.5f);
     }
 
@@ -88,9 +69,11 @@ public class WindEvent : WeatherEvent
         return wind.isPlaying;
     }
 
-    private void UpdateEmissionRate()
+    private void UpdateEmissionRate(float intensity)
     {
         windEmission.rateOverTime = minEmissionrate + intensity * (maxEmissionRate - minEmissionrate);        
     }
+
+    public override bool AllowIntensityChange() => true;
 }
 

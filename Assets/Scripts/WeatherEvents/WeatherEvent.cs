@@ -89,25 +89,30 @@ public class WeatherEventCondition
 
 public abstract class WeatherEvent : MonoBehaviour
 {
-
+    
     public enum EventName
     {
+        Clear,
         Fog,
         Rain,
+        Storm,
+        Tornado,
         Snow,
         Wind,
         Fire,
         Avalanche,
-        Lightning
+        DynamicClouds
     }
 
 
 
+    public EventName eventName;
+    public string eventDescription;
 
-    protected List<WeatherParameter> weatherConditions;
-    protected float intensity;
-    private EventName eventName;
-    private string eventDescription;
+
+
+
+    protected List<WeatherParameter> weatherConditions; 
     protected AudioSource[] backgroundAudioSources;
 
 
@@ -136,17 +141,7 @@ public abstract class WeatherEvent : MonoBehaviour
     {
         this.effectPrefab = effectPrefab;
     }*/
-
-    /*
-    public WeatherEvent(EventName eventName, string eventDescription, List<WeatherParameter> conditions)
-    {
-        print("WeatherEvent costruttore " + eventName);
-        this.eventName = eventName;
-        this.eventDescription = eventDescription;
-        this.weatherConditions = conditions;
-        intensity = 0.5f;
-    }*/
-
+     
 
     public virtual bool CanActivateEvent(WeatherState weather)
     {
@@ -160,18 +155,21 @@ public abstract class WeatherEvent : MonoBehaviour
     //public abstract void SetIntensity(float intensity);
     public void SetIntensity(float intensity)
     {
-        this.intensity = Mathf.Clamp01(intensity);
-        IntensityUpdate();
-
+        IntensityUpdate(Mathf.Clamp01(intensity));
     }
 
-    protected abstract void IntensityUpdate();
+    protected abstract void IntensityUpdate(float intensity);
 
-    public float GetIntensity() => intensity;
+    //public float GetIntensity() => intensity;
 
     public abstract void StartEvent();
     public abstract void StopEvent();
     public abstract bool IsEventActive();
+    public abstract bool AllowIntensityChange();
+
+
+
+    /// //////////////////////////////////
 
 
     protected void StartBackgroundAudio()

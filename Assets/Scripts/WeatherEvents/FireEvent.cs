@@ -47,9 +47,7 @@ public class FireEvent : WeatherEvent
     private CubicHermiteSpline path = new CubicHermiteSpline();
     private List<string> prova = new List<string>();
 
-    /*public FireEvent(EventName name, string description, List<WeatherParameter> conditions) : base(name, description, conditions)
-    {
-    }*/
+
 
     private void Start()
     {
@@ -131,7 +129,7 @@ public class FireEvent : WeatherEvent
 
     public override void StartEvent()
     {
-        UpdateEmissionRate();
+        UpdateEmissionRate(WeatherController.instance.GetEventIntensity());
         foreach (var f in fires)
         {
             f.fire.Play();
@@ -156,9 +154,9 @@ public class FireEvent : WeatherEvent
     }
 
 
-    protected override void IntensityUpdate()
+    protected override void IntensityUpdate(float intensity)
     {
-        UpdateEmissionRate();
+        UpdateEmissionRate(intensity);
     }
 
     public override bool IsEventActive()
@@ -166,7 +164,7 @@ public class FireEvent : WeatherEvent
         return false;
     }
 
-    private void UpdateEmissionRate()
+    private void UpdateEmissionRate(float intensity)
     {
         foreach(FireData fd in fires)
         {
@@ -174,5 +172,7 @@ public class FireEvent : WeatherEvent
             emission.rateOverTime = fd.minRateOverTime + intensity * (fd.maxRateOverTime - fd.minRateOverTime);
         }
     }
+
+    public override bool AllowIntensityChange() => true;
 }
 
