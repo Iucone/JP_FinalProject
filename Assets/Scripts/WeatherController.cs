@@ -1,4 +1,5 @@
 using UnityEngine;
+using static WeatherEvent;
 
 public class WeatherController : MonoBehaviour
 {
@@ -146,4 +147,16 @@ public class WeatherController : MonoBehaviour
 
     public float GetEventIntensity() => eventIntensity;
 
+
+    public void StartEvent(EventName eventName)
+    {
+        for (int i = 0; i < weatherEvents.Length; i++)
+        {
+            if (weatherEvents[i].GetEventName().Equals(eventName))
+            {
+                StartWeatherEvent(i);
+                break;
+            }    
+        }
+    }
 }

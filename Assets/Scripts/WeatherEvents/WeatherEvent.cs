@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEngine.ParticleSystem;
@@ -84,12 +85,15 @@ public class WeatherState
 public class WeatherEventCondition
 {
     //List<WeatherParameter>  
-}
+} 
 
 
+
+[Serializable]
 public abstract class WeatherEvent : MonoBehaviour
 {
-    
+
+    [Serializable]
     public enum EventName
     {
         Clear,
