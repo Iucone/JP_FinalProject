@@ -32,7 +32,7 @@ public class Lightning : MonoBehaviour
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {        
         extraFlashesDelay = Random.Range(0f, 15f);
         curFlashDuration = Random.Range(flashesDuration[0], flashesDuration[1]);

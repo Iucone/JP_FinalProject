@@ -11,18 +11,12 @@ public class AvalancheEvent : WeatherEvent
     [Tooltip("Avalanche")]
     [SerializeField]
     public ParticleSystem[] avalanche;
-     
 
 
-
-    private void Start()
+    private void Awake()
     {
+        OnAwake();
     }
-
-    private void Update()
-    { 
-    }
-
 
     public override bool CanActivateEvent(WeatherState weather)
     {

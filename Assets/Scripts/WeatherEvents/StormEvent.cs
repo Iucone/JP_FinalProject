@@ -22,10 +22,11 @@ public class StormEvent : WeatherEvent
     private float envLightDefIntensity;
     //private AudioSource audioSource;
 
-     
 
-    void Start()
+
+    void Awake()
     { 
+        OnAwake();
         //lightningStrike.SetActive(false);
         envLightDefIntensity = envLight.intensity;
         windEmission = wind.emission;

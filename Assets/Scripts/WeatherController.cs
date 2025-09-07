@@ -18,9 +18,8 @@ public class WeatherController : MonoBehaviour
     public static WeatherController instance { get ; private set; }
 
 
-    private void Awake()
+    void Awake()
     {
-
         if (instance != null)
         {
             Destroy(this);
@@ -35,6 +34,7 @@ public class WeatherController : MonoBehaviour
     void Start()
     {
         StartWeatherEvent(0);
+        WeatherSceneUI.instance.OnWeatherControllerInitialized();
     }
 
     // Update is called once per frame
@@ -148,6 +148,13 @@ public class WeatherController : MonoBehaviour
     public float GetEventIntensity() => eventIntensity;
 
 
+    public void SetIntensity(float intensity)
+    {
+        eventIntensity = Mathf.Clamp01(intensity);
+        UpdateCurrentWeatherEvent();
+    }
+
+
     public void StartEvent(EventName eventName)
     {
         for (int i = 0; i < weatherEvents.Length; i++)
@@ -158,5 +165,21 @@ public class WeatherController : MonoBehaviour
                 break;
             }    
         }
+    }
+
+
+    public string GetCurrentEventName()
+    {
+        return weatherEvents[activeWeaterEventIndex].GetEventName().ToString();        
+    }
+
+    public string GetCurrentEventDescription()
+    {
+        return weatherEvents[activeWeaterEventIndex].GetEventDescription();
+    }
+
+    public bool AllowEventIntensityChange()
+    {
+        return weatherEvents[activeWeaterEventIndex].AllowIntensityChange();
     }
 }

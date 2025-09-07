@@ -16,11 +16,12 @@ public class WindEvent : WeatherEvent
 
     private EmissionModule windEmission, debrisEmission;
     private CubicHermiteSpline spline = new CubicHermiteSpline();
-     
 
 
-    private void Start()
+
+    void Awake()
     {
+        OnAwake();
         windEmission = wind.emission;
         debrisEmission = debris.emission;
     }

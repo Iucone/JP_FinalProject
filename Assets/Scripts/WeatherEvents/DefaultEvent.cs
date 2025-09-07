@@ -5,12 +5,9 @@ public class DefaultEvent : WeatherEvent
 {
     bool isEventActive = false;
 
-    private void Start()
-    {     
-    }
-
-    private void Update()
+    private void Awake()
     {
+        OnAwake();
     }
 
 
@@ -18,7 +15,6 @@ public class DefaultEvent : WeatherEvent
     {
         return false;
     }
-
 
     public override void StartEvent()
     {

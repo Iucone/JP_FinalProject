@@ -49,8 +49,9 @@ public class FireEvent : WeatherEvent
 
 
 
-    private void Start()
+    void Awake()
     {
+        OnAwake();
         foreach (LightData ld in lights)
         {         
             ld.light.intensity = 0f;

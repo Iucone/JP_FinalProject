@@ -132,20 +132,13 @@ public abstract class WeatherEvent : MonoBehaviour
     }
      
 
-    private void Awake()
+    protected void OnAwake()    
     {
         backgroundAudioSources = GetComponents<AudioSource>();
         SetBackgroundAudioVolume(0f);
     }
 
 
-    /*
-    protected ParticleSystem effectPrefab;
-    protected void SetEffectPrefab(ParticleSystem effectPrefab)
-    {
-        this.effectPrefab = effectPrefab;
-    }*/
-     
 
     public virtual bool CanActivateEvent(WeatherState weather)
     {
@@ -155,8 +148,6 @@ public abstract class WeatherEvent : MonoBehaviour
     public string GetEventDescription() => eventDescription;
 
 
-
-    //public abstract void SetIntensity(float intensity);
     public void SetIntensity(float intensity)
     {
         IntensityUpdate(Mathf.Clamp01(intensity));

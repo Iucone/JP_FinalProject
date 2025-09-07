@@ -17,8 +17,10 @@ public class TornadoEvent : WeatherEvent
     private CubicHermiteSpline path = new CubicHermiteSpline();
     private float positionAlongPath = 0f;
      
-    void Start()
+    
+    void Awake()
     {
+        OnAwake();
         startingPosition = tornado.transform.position;
     }
 

@@ -23,20 +23,15 @@ public class RainEvent : WeatherEvent
 //    private AudioSource audioSource;
     private EmissionModule rainEmission;
     private EmissionModule fogEmission;
-    private MainModule fogMain;    
-    
+    private MainModule fogMain;
 
-    private void Start()
+
+    void Awake()
     {
+        OnAwake();
         rainEmission = rain.emission;
-        fogEmission = fog.emission;        
+        fogEmission = fog.emission;
         fogMain = fog.main;
-        
-        /*audioSource = GetComponent<AudioSource>();
-        if (audioSource != null )
-            audioSource.volume = 0f;*/
-
-        UpdateEmissionRate(WeatherController.instance.GetEventIntensity());
     }
 
     private void Update()
@@ -60,26 +55,12 @@ public class RainEvent : WeatherEvent
         fogMain.simulationSpeed = 1f;
         rain.Play();
         fog.Play();
-        SetIntensity(1.0f);
-        //audioSource.Play();
-        /*
-        if (audioSource != null)
-        {
-            if (!audioSource.isPlaying)
-                audioSource.Play();
+        SetIntensity(1.0f); 
 
-            StartCoroutine(ModifyAudioVolume(audioSource, 0.5f, true));
-        }*/
         StartBackgroundAudio();
         ModifyBackgroundAudioVolume(0.5f, true, false);
     }
-
-    void StopAudiosource()
-    {
-        //print("StoppingAudiosource");
-        //audioSource.Stop();
-    }
-
+     
 
 
     public override void StopEvent()
@@ -91,27 +72,9 @@ public class RainEvent : WeatherEvent
 
         rain.Stop();
         fog.Stop();
-        fogMain.simulationSpeed = 2f;
-        //audioSource.Stop();
-        //if (audioSource != null)
-        //  StartCoroutine(ModifyAudioVolume(audioSource, 0.5f, false, StopAudiosource));
-        //() => audioSource.Stop());:;);
-        ModifyBackgroundAudioVolume(0.5f, false, true);
+        fogMain.simulationSpeed = 2f; 
 
-
-        /*
-        rainEmission.rateOverTime = 0f;
-        ParticleSystem.MainModule main = rain.main;
-
-
-        //fogEmission.rateOverTime = 0f;
-        //fogMain.startColor.color;
-        Color col = fogMain.startColor.color;
-        fogMain.startColor = new Color(col.r, col.g, col.b, 0);
-        fogMain.simulationSpeed = 2f;
-        
-        Invoke(nameof(FinalizeStop), 5f); 
-        */
+        ModifyBackgroundAudioVolume(0.5f, false, true);         
     }
 
 

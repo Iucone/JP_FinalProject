@@ -18,7 +18,7 @@ public class LightFlashes : MonoBehaviour
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         // Ottiene o aggiunge un AudioSource al GameObject
         audioSource = GetComponent<AudioSource>();

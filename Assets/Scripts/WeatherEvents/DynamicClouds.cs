@@ -16,15 +16,12 @@ public class DynamicClouds : WeatherEvent
     bool stopped = false;
     float envLightDefIntensity;
 
-    private void Start()
+    void Awake()
     {
+        OnAwake();
         envLightDefIntensity = envLight.intensity;
     }
-
-    private void Update()
-    {
-    }
-
+     
 
     public override bool CanActivateEvent(WeatherState weather)
     {
@@ -45,10 +42,10 @@ public class DynamicClouds : WeatherEvent
         SetFloatParameterSmoothly(() => envLight.intensity, (value) => envLight.intensity = value, 3.0f, 0.5f);
         SetFloatParameterSmoothly(() => envLight.shadowStrength, (value) => envLight.shadowStrength = value, 0.3f, 0.5f);
 
-        StartBackgroundAudio();
-
-        WeatherController.instance.SetWindIntensity(0.8f);
+        StartBackgroundAudio();        
         ModifyBackgroundAudioVolume(0.5f, true, false);
+
+        WeatherController.instance.SetWindIntensity(0.8f); 
     }
 
     public override void StopEvent()

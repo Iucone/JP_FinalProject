@@ -15,8 +15,9 @@ public class FogEvent : WeatherEvent
     private EmissionModule fogEmission;
     bool stopped = false;
 
-    private void Start()
+    void Awake()
     {
+        OnAwake();
         fogEmission = fog.emission;
         //UpdateEmissionRate(WeatherController.instance.GetEventIntensity());        
     }
