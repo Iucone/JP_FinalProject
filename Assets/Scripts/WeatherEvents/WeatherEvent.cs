@@ -143,11 +143,15 @@ public abstract class WeatherEvent : MonoBehaviour
 
 
 
+    // TODO
     public virtual bool CanActivateEvent(WeatherState weather)
     {
         return false;
     }
+
+    // ENCAPSULATION
     public EventName GetEventName() => eventName;
+    // ENCAPSULATION
     public string GetEventDescription() => eventDescription;
 
 
@@ -156,10 +160,12 @@ public abstract class WeatherEvent : MonoBehaviour
         IntensityUpdate(Mathf.Clamp01(intensity));
     }
 
+    // ABSTRACTION
     protected abstract void IntensityUpdate(float intensity);
 
     //public float GetIntensity() => intensity;
 
+    // ABSTRACTION
     protected abstract void StartEventInternal();
     public void StartEvent()
     {
@@ -169,7 +175,7 @@ public abstract class WeatherEvent : MonoBehaviour
     //public abstract void StartEvent();
 
 
-
+    // ABSTRACTION
     protected abstract void StopEventInternal();
     public void StopEvent()
     {
@@ -180,16 +186,18 @@ public abstract class WeatherEvent : MonoBehaviour
 
 
 
-
+    // ENCAPSULATION
     public bool IsEventActive() => isEventActive;
     //public abstract bool IsEventActive();
+
+    // ABSTRACTION
     public abstract bool AllowIntensityChange();
 
 
 
     /// //////////////////////////////////
 
-
+    // ENCAPSULATION
     protected void StartBackgroundAudio()
     {
         if (backgroundAudioSources == null)
@@ -208,8 +216,8 @@ public abstract class WeatherEvent : MonoBehaviour
         }
     }
 
-    
 
+    // ENCAPSULATION
     protected void ModifyBackgroundAudioVolume(float duration, bool toMax, bool stopWhenMuted, float updateFreq = 20f)
     {
         if (backgroundAudioSources == null)
@@ -230,7 +238,7 @@ public abstract class WeatherEvent : MonoBehaviour
     }
 
 
-
+    // ENCAPSULATION
     protected IEnumerator ModifyAudioVolume(AudioSource audioSource, float duration, bool toMax, bool stopWhenMuted,
         //Action callback = null, 
         System.Action<AudioSource, bool> callback,
@@ -260,6 +268,7 @@ public abstract class WeatherEvent : MonoBehaviour
         callback?.Invoke(audioSource, stopWhenMuted);
     }
 
+    // ENCAPSULATION
     protected IEnumerator ModifyAudioVolume(AudioSource audioSource, float duration, bool toMax, 
         Action callback = null,         
         float updateFreq = 20f)
@@ -289,7 +298,7 @@ public abstract class WeatherEvent : MonoBehaviour
     }
 
 
-
+    // ENCAPSULATION
     private IEnumerator SetFloatParameterSmoothlyCR(Func<float> getter, Action<float> setter, float target, float duration)
     {
         float start = getter();
@@ -307,6 +316,7 @@ public abstract class WeatherEvent : MonoBehaviour
         setter(target); // Assicura che il valore finale sia preciso
     }
 
+    // ENCAPSULATION
     public void SetFloatParameterSmoothly(Func<float> getter, Action<float> setter, float target, float duration)
     {
         StartCoroutine(SetFloatParameterSmoothlyCR( getter, setter, target, duration));

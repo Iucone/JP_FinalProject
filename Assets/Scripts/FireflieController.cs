@@ -35,7 +35,7 @@ public class FireflieController : MonoBehaviour
             Random.Range(sceneCenter.y - radius, sceneCenter.y + radius));
 
         //targetPos = ComputeNewTargetPos();
-        CreateRandomPath(path, transform.position, numOfPathPoints);
+        Util.CreateRandomPath(path, transform.position, numOfPathPoints, sceneCenter, radius, out positionAlongPath);
         UpdateSpeed();
     }
 
@@ -66,41 +66,15 @@ public class FireflieController : MonoBehaviour
             {
                 //print("new path");
                 //positionAlongPath = 0.0f;
-                CreateRandomPath(path, transform.position, numOfPathPoints);
+                Util.CreateRandomPath(path, transform.position, numOfPathPoints, sceneCenter, radius, out positionAlongPath);
                 UpdateSpeed();
             }
         }
         
     }
-
+     
 
     /*
-    private Vector3 ComputeNewTargetPos(Vector3 curPosition)
-    {
-        float len = Random.Range(6f, 6f);
-        Vector3 dir = new Vector3(
-            Random.Range(-1f, 1f),
-            Random.Range(-1f, 1f),
-            Random.Range(-1f, 1f));
-
-        if (dir.magnitude < 0.001f)
-            print("porco dio");
-
-        Vector3 pos = curPosition +
-            dir.normalized * len;
-
-        
-        //pos.x = 2f*(sceneCenter.x - radius) - pos.x;
-        pos.y = Random.Range(2f, 3.5f);
-        pos.x = Mathf.Clamp(pos.x, sceneCenter.x - radius, sceneCenter.x + radius);
-        pos.z = Mathf.Clamp(pos.z, sceneCenter.y - radius, sceneCenter.y + radius);
-
-        if ((pos - curPosition).magnitude < 0.0000001f)
-            pos = curPosition + new Vector3(0.01f, 0.01f, 0.01f);
-
-        return pos;
-    }
-    */
     private Vector3 ComputeNewTargetPos(Vector3 curPosition)
     {
         //if (!(curPosition.x >= sceneCenter.x - radius && curPosition.x <= sceneCenter.x + radius &&
@@ -170,54 +144,8 @@ public class FireflieController : MonoBehaviour
         }
         return pos;
     }
-
-
-
-    /*
-    private Vector3[] CreateRandomPath(Vector3 startingPosition, int numOfPoints)
-    {
-        Vector3[] positions = new Vector3[numOfPoints];
-        positions[0] = startingPosition;
-        for (int i = 1; i < numOfPoints; i++)
-        {
-            positions[i] = startingPosition = ComputeNewTargetPos(startingPosition);
-        }
-        return positions;
-    }
-
-
-    private void CreateRandomPath(CubicHermiteSpline path, Vector3 startingPosition, int numOfPoints)
-    {   
-        path.Init(CreateRandomPath(startingPosition, numOfPoints));
-
-        Vector3 p = path.GetPointOnClosedPath(0f);
-        p = path.GetPointOnClosedPath(0.5f);
-        p = path.GetPointOnClosedPath(0.98f);
-        p = path.GetPointOnClosedPath(1.0f);
-        p = p;
-    }
-
-    private void CreateRandomPath2(CubicHermiteSpline path, Vector3 startingPosition, int numOfPoints)
-    {
-        Vector3[] points = path.GetPoints();
-        if (points == null)
-        {
-            CreateRandomPath(path, startingPosition, numOfPoints);
-            return;
-        }
-
-        Vector3[] points2 = new Vector3[numOfPoints];
-        points2[0] = points[points.Length - 2];
-        startingPosition = points2[1] = points[points.Length - 1];
-        for (int i = 2; i < numOfPoints; i++)
-        {
-            points2[i] = startingPosition = ComputeNewTargetPos(startingPosition);
-        }
-        
-
-    }
     */
-
+     
 
     /**
      * Crea un uovo path: precondizione è che o non c'è un vecchio path oppure se c'era
@@ -227,6 +155,7 @@ public class FireflieController : MonoBehaviour
      * Quindi startingPosition == tranform.position == path last point
      * 
      */
+    /*
     private void CreateRandomPath(CubicHermiteSpline path, Vector3 startingPosition, int numOfPoints)
     {
         Vector3[] oldPoints = path.GetPoints();
@@ -257,11 +186,13 @@ public class FireflieController : MonoBehaviour
         startingIndex--;
         positionAlongPath = (float) (startingIndex) / (newPoints.Length-1);
     }
+    */
 
     public void Hide()
     {
         hideMode = true;
-        hidePos = ComputeNewTargetPos(transform.position);
+        hidePos = Util.ComputeNewTargetPos(transform.position, sceneCenter, radius);
+            //ComputeNewTargetPos(transform.position);
         hidePos.y = -6f;
 
         /*

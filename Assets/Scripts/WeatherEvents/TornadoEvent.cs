@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
-using static UnityEditor.PlayerSettings;
+
+
+// INHERITANCE
 public class TornadoEvent : WeatherEvent
 {
     [SerializeField]
@@ -43,20 +43,20 @@ public class TornadoEvent : WeatherEvent
         { 
             {
                 //positionAlongPath = 0.0f;
-                CreateRandomPath(path, transform.position, numOfPathPoints);
+                Util.CreateRandomPath(path, transform.position, numOfPathPoints, sceneCenter, radius, out positionAlongPath);
                 UpdateSpeed();
             }
         }
     }
 
-
+    // POLYMORPHISM
     public override bool CanActivateEvent(WeatherState weather)
     {
         return false;
     }
 
 
-
+    // POLYMORPHISM
     protected override void StartEventInternal()
     {
         //if (tornado.isPlaying)
@@ -67,7 +67,7 @@ public class TornadoEvent : WeatherEvent
 
 
         tornado.transform.position = startingPosition;
-        CreateRandomPath(path, startingPosition, numOfPathPoints);         
+        Util.CreateRandomPath(path, startingPosition, numOfPathPoints, sceneCenter, radius, out positionAlongPath);
 
         UpdateSpeed();
 
@@ -90,13 +90,13 @@ public class TornadoEvent : WeatherEvent
         path.Reset();
     }
 
-
+    // POLYMORPHISM
     protected override void IntensityUpdate(float intensity)
     {
     }
      
 
-
+    /*
     private Vector3 ComputeNewTargetPos(Vector3 curPosition)
     {
         if (!(curPosition.x >= sceneCenter.x - radius && curPosition.x <= sceneCenter.x + radius &&
@@ -166,7 +166,7 @@ public class TornadoEvent : WeatherEvent
         }
         return pos;
     }
-     
+     */
 
     /**
      * Crea un uovo path: precondizione è che o non c'è un vecchio path oppure se c'era
@@ -176,6 +176,7 @@ public class TornadoEvent : WeatherEvent
      * Quindi startingPosition == tranform.position == path last point
      * 
      */
+    /*
     private void CreateRandomPath(CubicHermiteSpline path, Vector3 startingPosition, int numOfPoints)
     {
         Vector3[] oldPoints = path.GetPoints();
@@ -204,13 +205,14 @@ public class TornadoEvent : WeatherEvent
         startingIndex--;
         positionAlongPath = (float)(startingIndex) / (newPoints.Length - 1);
     }
+    */
 
     private void UpdateSpeed()
     {
         curSpeed = 1.0f / (float)path.GetPointCount() * speed;
     }
 
-
+    // POLYMORPHISM
     public override bool AllowIntensityChange() => false;
 }
 

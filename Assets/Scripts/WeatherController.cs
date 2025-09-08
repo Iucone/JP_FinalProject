@@ -47,6 +47,7 @@ public class WeatherController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Q))
         {
             eventIntensity -= 0.1f;
@@ -58,7 +59,7 @@ public class WeatherController : MonoBehaviour
             eventIntensity += 0.1f;
             eventIntensity = Mathf.Clamp01(eventIntensity);
             UpdateCurrentWeatherEvent();
-        }
+        }*/
 
         /*
         if (Input.GetKeyDown(KeyCode.Alpha1))
