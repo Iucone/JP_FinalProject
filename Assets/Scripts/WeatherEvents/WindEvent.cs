@@ -5,12 +5,14 @@ public class WindEvent : WeatherEvent
 {
     [Tooltip("Wind particle system with a debris particle system as a child")]
     [SerializeField]
-    public ParticleSystem wind;
+    private ParticleSystem wind;
     [SerializeField]
-    public ParticleSystem debris;
+    private ParticleSystem debris;
 
-    public float minEmissionrate = 20;
-    public float maxEmissionRate = 100;
+    [SerializeField]
+    private float minEmissionrate = 20;
+    [SerializeField]
+    private float maxEmissionRate = 100;
     
 
 

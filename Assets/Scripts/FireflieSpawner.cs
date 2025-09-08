@@ -8,12 +8,11 @@ public class FireflieSpawner : MonoBehaviour
     public static FireflieSpawner instance { get; private set; }
 
     [SerializeField]
-    public GameObject firefliePrefab;
+    private GameObject firefliePrefab;
 
     [SerializeField]
     private int maxFireflies = 8;
 
-    private int curActiveFireflies = 0;
     private List<FireflieController>    fireflies = new List<FireflieController>();
 
     private void Awake()

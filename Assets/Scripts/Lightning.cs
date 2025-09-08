@@ -8,20 +8,30 @@ using UnityEngine.UIElements;
 
 public class Lightning : MonoBehaviour
 {
-    public ParticleSystem lightingPrefab;
-    public ParticleSystem explosionPrefab;
-    public AudioClip[] lightningAudioClips;
-    public AudioClip[] rumbleAudioClips;
-    public Light envLight;
-    public float minTimeBetweenFlashes = 16f;
-    public float minTimeBetweenLightningStrike = 12f;
-    public float lightningProb = 0.001f;
-    public Vector2 flashesDuration = new Vector2(1f, 5f);
+    [SerializeField]
+    private ParticleSystem lightingPrefab;
+    [SerializeField]
+    private ParticleSystem explosionPrefab;
+    [SerializeField]
+    private AudioClip[] lightningAudioClips;
+    [SerializeField]
+    private AudioClip[] rumbleAudioClips;
+    [SerializeField]
+    private Light envLight;
+    [SerializeField]
+    private float minTimeBetweenFlashes = 16f;
+    [SerializeField]
+    private float minTimeBetweenLightningStrike = 12f;
+    [SerializeField]
+    private float lightningProb = 0.001f;
+    [SerializeField]
+    private Vector2 flashesDuration = new Vector2(1f, 5f);
+
 
     private float curFlashDuration;
     private float extraFlashesDelay = 0f;
     private float lastFlashesTime = 0f;
-    private float flashesEventTimeElapsed = 0f;
+    //private float flashesEventTimeElapsed = 0f;
     private AudioSource audioSource;
     private LightFlashes lightFlashes;
     private float lastLightningStrikeTime = 0f;
@@ -150,7 +160,7 @@ public class Lightning : MonoBehaviour
         while (numStrikes >= 0)
         {
             uint seed = (uint)(Random.value * 1000000);
-            print("seed " + seed);
+            //print("seed " + seed);
             List<ParticleSystem> lightnings = new List<ParticleSystem>();
             for (int i = 0; i < 5; i++)
             {

@@ -6,8 +6,9 @@ public class Fireflies : WeatherEvent
 {
     //[Tooltip("Fireflies")]
 
-
     private Light envLight;
+
+
 
     void Awake()
     {

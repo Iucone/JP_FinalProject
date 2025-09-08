@@ -110,9 +110,10 @@ public abstract class WeatherEvent : MonoBehaviour
     }
 
 
-
-    public EventName eventName;
-    public string eventDescription;
+    [SerializeField]
+    private EventName eventName;
+    [SerializeField]
+    private string eventDescription;
 
 
 

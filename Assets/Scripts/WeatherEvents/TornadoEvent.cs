@@ -4,12 +4,18 @@ using UnityEngine.Rendering;
 using static UnityEditor.PlayerSettings;
 public class TornadoEvent : WeatherEvent
 {
-    public ParticleSystem tornado;
-    public ParticleSystem rain;
-    public ParticleSystem[] winds;
-    public Vector2 sceneCenter = new Vector2(32f, 26f);
-    public float radius = 12f;
-    public float speed = 0.15f;
+    [SerializeField]
+    private ParticleSystem tornado;
+    [SerializeField]
+    private ParticleSystem rain;
+    [SerializeField]
+    private ParticleSystem[] winds;
+    [SerializeField]
+    private Vector2 sceneCenter = new Vector2(32f, 26f);
+    [SerializeField]
+    private float radius = 12f;
+    [SerializeField]
+    private float speed = 0.15f;
 
     private float curSpeed;
     private Vector3 startingPosition;
@@ -61,22 +67,7 @@ public class TornadoEvent : WeatherEvent
 
 
         tornado.transform.position = startingPosition;
-        CreateRandomPath(path, startingPosition, numOfPathPoints);
-
-        if (false)
-        {
-            GameObject marker = GameObject.Find("TestCube");
-            for (int i = 0; i < path.GetPointCount(); i++) 
-            {
-                GameObject bo = Instantiate(marker, path.GetPoints()[i], Quaternion.identity);
-                Renderer r = bo.GetComponent<Renderer>();
-                Color col = r.material.color;
-                col.r = ((float)i / (path.GetPointCount()-1)) * 1f;
-                col.g = 0f;
-                col.b = 0f;
-                r.material.color = col;
-            }
-        }
+        CreateRandomPath(path, startingPosition, numOfPathPoints);         
 
         UpdateSpeed();
 

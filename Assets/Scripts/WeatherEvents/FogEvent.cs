@@ -5,15 +5,14 @@ public class FogEvent : WeatherEvent
 {
     [Tooltip("Fog event")]
     [SerializeField]
-    public ParticleSystem fog;
+    private ParticleSystem fog;
 
 
-    float minAlpha = 4f/255f;
-    float maxAlpha = 20f/255f;
-    float minEmissionRate = 10;
-    float maxEmissionRate = 100;
+    //private float minAlpha = 4f/255f;
+    //private float maxAlpha = 20f/255f;
+    private float minEmissionRate = 10;
+    private float maxEmissionRate = 100;
     private EmissionModule fogEmission;
-    bool stopped = false;
 
     void Awake()
     {
@@ -34,7 +33,7 @@ public class FogEvent : WeatherEvent
 
     void SlowDownSimulation()
     {
-        if (stopped)
+        if (!IsEventActive())
             return;
 
         var main = fog.main;
@@ -42,9 +41,7 @@ public class FogEvent : WeatherEvent
     }
 
     protected override void StartEventInternal()
-    {
-
-        stopped = false;
+    {         
         fog.Play();
         var main = fog.main;
         main.simulationSpeed = 2.5f;
@@ -56,7 +53,6 @@ public class FogEvent : WeatherEvent
 
     protected override void StopEventInternal()
     {
-        stopped = true;
         fog.Stop();
         var main = fog.main;
         main.simulationSpeed = 3.5f;

@@ -1,11 +1,5 @@
 
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.AI;
-using UnityEngine.UI;
 using static UnityEngine.ParticleSystem;
 
 public class StormEvent : WeatherEvent
@@ -13,13 +7,13 @@ public class StormEvent : WeatherEvent
 
     [Tooltip("Storm event.")]
     [SerializeField]
-    public ParticleSystem rain, wind, fog;
-    public GameObject lightningStrike;
+    private ParticleSystem rain, wind, fog;
+    [SerializeField]
+    private GameObject lightningStrike;
 
     private EmissionModule rainEmission;
     private EmissionModule windEmission;
     private float envLightDefIntensity;
-    //private AudioSource audioSource;
     private Light envLight;
 
 
@@ -29,18 +23,15 @@ public class StormEvent : WeatherEvent
         //lightningStrike.SetActive(false);        
         windEmission = wind.emission;
         rainEmission = rain.emission;
-        //audioSource = GetComponents<AudioSource>();
-        //audioSource = GetComponent<AudioSource>();
-        //audioSource.volume = 0f;
     }
 
-    private void Start()
+    void Start()
     {
         envLightDefIntensity = WeatherController.instance.GetEnvironmentLightDefaultIntensity();
     }
 
 
-    private void Update()
+    void Update()
     {
     }
 
@@ -50,8 +41,6 @@ public class StormEvent : WeatherEvent
     {
         return false;
     }
-
-
 
 
     protected override void StartEventInternal()
@@ -72,9 +61,6 @@ public class StormEvent : WeatherEvent
         
         StartBackgroundAudio();
         ModifyBackgroundAudioVolume(0.5f, true, false);
-        //if (!audioSource.isPlaying)
-        //  audioSource.Play();
-        //StartCoroutine(ModifiyAudioVolume(audioSource, 0.5f, true));
     }
 
     protected override void StopEventInternal()
@@ -94,22 +80,7 @@ public class StormEvent : WeatherEvent
         //StartCoroutine(ModifiyAudioVolume(audioSource, 0.5f, false, () => audioSource.Stop()));
         ModifyBackgroundAudioVolume(0.5f, false, true);
     }
-
-    /*
-    IEnumerator ResetEnvLight()
-    {
-        float t = 0;
-        float intensity = envLight.intensity;
-        while (t <= 0.5f)
-        {
-            envLight.intensity = intensity + (t / 0.5f) * (envLightIntensity - intensity);
-            yield return new WaitForSeconds(Time.deltaTime);
-            t += Time.deltaTime;
-        }
-        envLight.intensity = envLightIntensity;
-    }
-    */
-
+     
     protected override void IntensityUpdate(float intensity)
     {
     }

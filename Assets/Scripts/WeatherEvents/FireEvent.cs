@@ -1,11 +1,6 @@
 
 using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.AI;
-using UnityEngine.UI;
 using static UnityEngine.ParticleSystem;
 
 public class FireEvent : WeatherEvent
@@ -32,21 +27,10 @@ public class FireEvent : WeatherEvent
     [Tooltip("Fire event-")]
     [SerializeField]
     //public ParticleSystem[] fires;
-    public FireData[] fires;
+    private FireData[] fires;
     [SerializeField]
-    public LightData[] lights;
+    private LightData[] lights;
      
-
-
-
-    private EmissionModule rainEmission;
-    private EmissionModule fogEmission;
-    private MainModule fogMain;
-    //private bool isStopping = false;
-    
-    private CubicHermiteSpline path = new CubicHermiteSpline();
-    private List<string> prova = new List<string>();
-
 
 
     void Awake()

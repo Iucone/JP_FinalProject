@@ -2,9 +2,8 @@ using UnityEngine;
 using static UnityEngine.ParticleSystem;
 
 public class DefaultEvent : WeatherEvent
-{
-    bool isEventActive = false;    
-    Light envLight;
+{ 
+    private Light envLight;
 
     private void Awake()
     {

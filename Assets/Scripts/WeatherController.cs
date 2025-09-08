@@ -4,15 +4,15 @@ using static WeatherEvent;
 public class WeatherController : MonoBehaviour
 {
     [SerializeField]
-    WeatherEvent[]   weatherEvents;
+    private WeatherEvent[]   weatherEvents;
     [SerializeField]
-    WindZone windZone;
+    private WindZone windZone;
     [SerializeField]
-    Light envLight;
+    private Light envLight;
     [SerializeField]
-    public float envLightDefaultIntensity = 0.35f;
+    private float envLightDefaultIntensity = 0.35f;
 
-    public float defaultWindIntensity = 0.3f;
+    private float defaultWindIntensity = 0.3f;
 
 
     private int activeWeaterEventIndex = -1;

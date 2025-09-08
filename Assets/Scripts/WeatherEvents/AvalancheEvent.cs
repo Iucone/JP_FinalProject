@@ -10,7 +10,7 @@ public class AvalancheEvent : WeatherEvent
 {
     [Tooltip("Avalanche")]
     [SerializeField]
-    public ParticleSystem[] avalanche;
+    private ParticleSystem[] avalanche;
 
 
     private void Awake()

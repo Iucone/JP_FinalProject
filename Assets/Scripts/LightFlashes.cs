@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class LightFlashes : MonoBehaviour
 {
-    public AudioClip[] rumbleAudioClips;
-    public Light envLight;
+    [SerializeField]
+    private AudioClip[] rumbleAudioClips;
+    [SerializeField]
+    private Light envLight;
     
     private float envLightIntensity;
     private float curFlashDuration;

@@ -7,11 +7,14 @@ using UnityEngine.Assertions.Must;
 
 public class FireflieController : MonoBehaviour
 {
-    public Vector2 sceneCenter = new Vector2(25f, 25f);
-    public float radius = 20f;
-    public float speed = 0.35f;
+    [SerializeField]
+    private Vector2 sceneCenter = new Vector2(25f, 25f);
+    [SerializeField]
+    private float radius = 20f;
+    [SerializeField]
+    private float speed = 0.35f;
 
-    private int numOfPathPoints = 4;
+    private int numOfPathPoints = 8;//4;
     private Vector3 targetPos;
     //private Spline path = new Spline();
     private CubicHermiteSpline path = new CubicHermiteSpline();
@@ -156,7 +159,7 @@ public class FireflieController : MonoBehaviour
                         if (!(pos.x >= sceneCenter.x - radius && pos.x <= sceneCenter.x + radius &&
                             pos.z >= sceneCenter.y - radius && pos.z <= sceneCenter.y + radius))
                         {
-                            print("OutOfBounds");
+                            //print("OutOfBounds");
                         }
                     }
 

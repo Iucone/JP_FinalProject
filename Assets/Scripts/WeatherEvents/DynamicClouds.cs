@@ -7,13 +7,13 @@ public class DynamicClouds : WeatherEvent
 {
     [Tooltip("Dynamic clouds event")]
     [SerializeField]
-    public ParticleSystem clouds;
-    public ParticleSystem debris;
-    public ParticleSystem wind;    
-    public MinMaxParameter minMaxCloudsSpeed;
+    private ParticleSystem clouds;
+    [SerializeField]
+    private ParticleSystem debris;
+    [SerializeField]
+    private MinMaxParameter minMaxCloudsSpeed;
 
-    bool stopped = false;
-    Light envLight;
+    private Light envLight;
 
     void Awake()
     {
@@ -33,9 +33,7 @@ public class DynamicClouds : WeatherEvent
             envLight = WeatherController.instance.GetEnvironmentLight();
 
         IntensityUpdate(WeatherController.instance.GetEventIntensity());
-
-        stopped = false;
-
+         
         clouds.Play();
         debris.Play();
 
@@ -51,9 +49,7 @@ public class DynamicClouds : WeatherEvent
     }
 
     protected override void StopEventInternal()
-    {
-        stopped = true;
-
+    { 
         clouds.Stop();
         debris.Stop();
          

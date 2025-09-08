@@ -20,7 +20,6 @@ public class RainEvent : WeatherEvent
     private float maxEmissionRate = 1500;
 
 
-//    private AudioSource audioSource;
     private EmissionModule rainEmission;
     private EmissionModule fogEmission;
     private MainModule fogMain;
