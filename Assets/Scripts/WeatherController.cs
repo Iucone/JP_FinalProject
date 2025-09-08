@@ -4,15 +4,21 @@ using static WeatherEvent;
 public class WeatherController : MonoBehaviour
 {
     [SerializeField]
-    public WeatherEvent[]   weatherEvents;
+    WeatherEvent[]   weatherEvents;
     [SerializeField]
-    public WindZone windZone;
-    public float defaultWindIntensity = 0.3f;
+    WindZone windZone;
+    [SerializeField]
+    Light envLight;
+    [SerializeField]
+    public float envLightDefaultIntensity = 0.35f;
 
+    public float defaultWindIntensity = 0.3f;
 
 
     private int activeWeaterEventIndex = -1;
     private float eventIntensity = 1f;
+    
+
 
 
     public static WeatherController instance { get ; private set; }
@@ -27,6 +33,7 @@ public class WeatherController : MonoBehaviour
         }
 
         instance = this;
+        //envLightDefaultIntensity = envLight.intensity;
     }
 
 
@@ -53,7 +60,7 @@ public class WeatherController : MonoBehaviour
             UpdateCurrentWeatherEvent();
         }
 
-
+        /*
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             StartWeatherEvent(1);
@@ -97,6 +104,7 @@ public class WeatherController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Y))
             StartWeatherEvent(0);
         //StopCurrentWeatherEvent();
+        */
     }
 
 
@@ -111,9 +119,6 @@ public class WeatherController : MonoBehaviour
 
         weatherEvents[index].StartEvent();
         activeWeaterEventIndex = index;
-
-        print("Weather Event: " + weatherEvents[index].GetEventName().ToString());
-        print("Weather description: " + weatherEvents[index].GetEventDescription());
     }
 
     private void StopCurrentWeatherEvent()
@@ -182,4 +187,8 @@ public class WeatherController : MonoBehaviour
     {
         return weatherEvents[activeWeaterEventIndex].AllowIntensityChange();
     }
+
+    public Light GetEnvironmentLight() => envLight;
+
+    public float GetEnvironmentLightDefaultIntensity() => envLightDefaultIntensity;
 }

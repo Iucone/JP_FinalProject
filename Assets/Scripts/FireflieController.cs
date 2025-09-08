@@ -61,7 +61,7 @@ public class FireflieController : MonoBehaviour
                 positionAlongPath = 1f;
             else
             {
-                print("new path");
+                //print("new path");
                 //positionAlongPath = 0.0f;
                 CreateRandomPath(path, transform.position, numOfPathPoints);
                 UpdateSpeed();
@@ -71,6 +71,7 @@ public class FireflieController : MonoBehaviour
     }
 
 
+    /*
     private Vector3 ComputeNewTargetPos(Vector3 curPosition)
     {
         float len = Random.Range(6f, 6f);
@@ -96,6 +97,78 @@ public class FireflieController : MonoBehaviour
 
         return pos;
     }
+    */
+    private Vector3 ComputeNewTargetPos(Vector3 curPosition)
+    {
+        //if (!(curPosition.x >= sceneCenter.x - radius && curPosition.x <= sceneCenter.x + radius &&
+          //   curPosition.z >= sceneCenter.y - radius && curPosition.z <= sceneCenter.y + radius))
+            //print("curPosition wrong");
+
+        Vector3 pos = Vector3.zero;
+        //while (true)
+        {
+
+            float len = Random.Range(8f, 14f);
+            Vector3 dir = new Vector3(
+                Random.Range(-1f, 1f),
+                Random.Range(-1f, 1f),
+                Random.Range(-1f, 1f));
+
+
+            pos = curPosition +
+                dir.normalized * len;
+
+
+            //pos.x = 2f*(sceneCenter.x - radius) - pos.x;
+            pos.y = Random.Range(2f, 3.5f);
+            //pos.x = Mathf.Clamp(pos.x, sceneCenter.x - radius, sceneCenter.x + radius);
+            //pos.z = Mathf.Clamp(pos.z, sceneCenter.y - radius, sceneCenter.y + radius);           
+
+            //if (pos.x >= sceneCenter.x - radius && pos.x <= sceneCenter.x + radius &&
+            //  pos.z >= sceneCenter.y - radius && pos.z <= sceneCenter.y + radius)
+            //break;
+
+
+            if (!(pos.x >= sceneCenter.x - radius && pos.x <= sceneCenter.x + radius &&
+                pos.z >= sceneCenter.y - radius && pos.z <= sceneCenter.y + radius))
+            {
+                float t = dir.z;
+                dir.z = -dir.x;
+                dir.x = t;
+                pos = curPosition + dir.normalized * len;
+                pos.y = Random.Range(2f, 3.5f);
+                if (!(pos.x >= sceneCenter.x - radius && pos.x <= sceneCenter.x + radius &&
+                    pos.z >= sceneCenter.y - radius && pos.z <= sceneCenter.y + radius))
+                {
+                    t = dir.z;
+                    dir.z = -dir.x;
+                    dir.x = t;
+                    pos = curPosition + dir.normalized * len;
+                    pos.y = Random.Range(2f, 3.5f);
+                    if (!(pos.x >= sceneCenter.x - radius && pos.x <= sceneCenter.x + radius &&
+                        pos.z >= sceneCenter.y - radius && pos.z <= sceneCenter.y + radius))
+                    {
+                        t = dir.z;
+                        dir.z = -dir.x;
+                        dir.x = t;
+                        pos = curPosition + dir.normalized * len;
+                        pos.y = Random.Range(2f, 3.5f);
+                        if (!(pos.x >= sceneCenter.x - radius && pos.x <= sceneCenter.x + radius &&
+                            pos.z >= sceneCenter.y - radius && pos.z <= sceneCenter.y + radius))
+                        {
+                            print("OutOfBounds");
+                        }
+                    }
+
+
+                }
+            }
+
+        }
+        return pos;
+    }
+
+
 
     /*
     private Vector3[] CreateRandomPath(Vector3 startingPosition, int numOfPoints)

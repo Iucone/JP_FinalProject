@@ -41,7 +41,7 @@ public class FogEvent : WeatherEvent
         main.simulationSpeed = 1f;
     }
 
-    public override void StartEvent()
+    protected override void StartEventInternal()
     {
 
         stopped = false;
@@ -54,7 +54,7 @@ public class FogEvent : WeatherEvent
         ModifyBackgroundAudioVolume(0.5f, true, false);
     }
 
-    public override void StopEvent()
+    protected override void StopEventInternal()
     {
         stopped = true;
         fog.Stop();
@@ -76,11 +76,6 @@ public class FogEvent : WeatherEvent
         //main.startColor = new Color(col.r, col.g, col.b, minAlpha + GetIntensity() * (maxAlpha - minAlpha));
     }
 
-    public override bool IsEventActive()
-    {
-        //return rain.gameObject.activeSelf;
-        return fog.isPlaying;
-    }
 
     private void UpdateEmissionRate(float intensity)
     {

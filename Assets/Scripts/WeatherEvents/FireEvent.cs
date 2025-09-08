@@ -128,7 +128,7 @@ public class FireEvent : WeatherEvent
     }
 
 
-    public override void StartEvent()
+    protected override void StartEventInternal()
     {
         UpdateEmissionRate(WeatherController.instance.GetEventIntensity());
         foreach (var f in fires)
@@ -142,7 +142,7 @@ public class FireEvent : WeatherEvent
         ModifyBackgroundAudioVolume(0.5f, true, false);
     }
 
-    public override void StopEvent()
+    protected override void StopEventInternal()
     {
         foreach (var f in fires)
         {
@@ -159,12 +159,7 @@ public class FireEvent : WeatherEvent
     {
         UpdateEmissionRate(intensity);
     }
-
-    public override bool IsEventActive()
-    {
-        return false;
-    }
-
+     
     private void UpdateEmissionRate(float intensity)
     {
         foreach(FireData fd in fires)

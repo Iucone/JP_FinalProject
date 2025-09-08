@@ -16,14 +16,14 @@ public class WindEvent : WeatherEvent
 
     private EmissionModule windEmission, debrisEmission;
     private CubicHermiteSpline spline = new CubicHermiteSpline();
-
+    private Light envLight;
 
 
     void Awake()
     {
         OnAwake();
         windEmission = wind.emission;
-        debrisEmission = debris.emission;
+        debrisEmission = debris.emission;        
     }
 
     private void Update()
@@ -37,8 +37,11 @@ public class WindEvent : WeatherEvent
     }
 
 
-    public override void StartEvent()
+    protected override void StartEventInternal()
     {
+        if (envLight == null)
+            envLight = WeatherController.instance.GetEnvironmentLight();
+
         IntensityUpdate(WeatherController.instance.GetEventIntensity());
 
         wind.Play();
@@ -46,15 +49,26 @@ public class WindEvent : WeatherEvent
 
         StartBackgroundAudio();
         ModifyBackgroundAudioVolume(0.5f, true, false);
+
+        SetFloatParameterSmoothly(() => envLight.intensity, (value) => envLight.intensity = value, 2.0f, 0.5f);
+        SetFloatParameterSmoothly(() => envLight.shadowStrength, (value) => envLight.shadowStrength = value, 0.3f, 0.5f);
+
     }
 
-    public override void StopEvent()
+    protected override void StopEventInternal()
     { 
         wind.Stop();
         debris.Stop();        
         WeatherController.instance.ResetWindIntensity();       
         
         ModifyBackgroundAudioVolume(0.5f, false, true);
+
+        SetFloatParameterSmoothly(
+            () => envLight.intensity, (value) => envLight.intensity = value,
+            WeatherController.instance.GetEnvironmentLightDefaultIntensity(),
+            0.5f);
+
+        SetFloatParameterSmoothly(() => envLight.shadowStrength, (value) => envLight.shadowStrength = value, 0.0f, 0.5f);
     }
 
 
@@ -63,13 +77,7 @@ public class WindEvent : WeatherEvent
         UpdateEmissionRate(intensity);
         WeatherController.instance.SetWindIntensity(0.5f + WeatherController.instance.GetEventIntensity() * 0.5f);
     }
-
-    public override bool IsEventActive()
-    {
-        //return rain.gameObject.activeSelf;
-        return wind.isPlaying;
-    }
-
+     
     private void UpdateEmissionRate(float intensity)
     {
         windEmission.rateOverTime = minEmissionrate + intensity * (maxEmissionRate - minEmissionrate);        

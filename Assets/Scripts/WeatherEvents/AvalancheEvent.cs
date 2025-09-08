@@ -24,7 +24,7 @@ public class AvalancheEvent : WeatherEvent
     }
 
 
-    public override void StartEvent()
+    protected override void StartEventInternal()
     {
         foreach (ParticleSystem p in avalanche)
             p.Play();
@@ -34,7 +34,7 @@ public class AvalancheEvent : WeatherEvent
         ModifyBackgroundAudioVolume(0.5f, true, false);
     }
 
-    public override void StopEvent()
+    protected override void StopEventInternal()
     {
         foreach (ParticleSystem p in avalanche)
             p.Stop();
@@ -46,11 +46,6 @@ public class AvalancheEvent : WeatherEvent
 
     protected override void IntensityUpdate(float intensity)
     {
-    }
-
-    public override bool IsEventActive()
-    {
-        return avalanche[0].isPlaying;
     }
 
 

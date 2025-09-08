@@ -105,7 +105,8 @@ public abstract class WeatherEvent : MonoBehaviour
         Wind,
         Fire,
         Avalanche,
-        DynamicClouds
+        DynamicClouds,
+        NocturneMild,
     }
 
 
@@ -118,6 +119,7 @@ public abstract class WeatherEvent : MonoBehaviour
 
     protected List<WeatherParameter> weatherConditions; 
     protected AudioSource[] backgroundAudioSources;
+    protected bool isEventActive = false;
 
 
     protected void SetBackgroundAudioVolume(float volume)
@@ -157,9 +159,29 @@ public abstract class WeatherEvent : MonoBehaviour
 
     //public float GetIntensity() => intensity;
 
-    public abstract void StartEvent();
-    public abstract void StopEvent();
-    public abstract bool IsEventActive();
+    protected abstract void StartEventInternal();
+    public void StartEvent()
+    {
+        isEventActive = true;
+        StartEventInternal();
+    }
+    //public abstract void StartEvent();
+
+
+
+    protected abstract void StopEventInternal();
+    public void StopEvent()
+    {
+        StopEventInternal();
+        isEventActive = false;
+    }
+    //public abstract void StopEvent();
+
+
+
+
+    public bool IsEventActive() => isEventActive;
+    //public abstract bool IsEventActive();
     public abstract bool AllowIntensityChange();
 
 

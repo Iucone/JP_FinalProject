@@ -9,17 +9,15 @@ public class DynamicClouds : WeatherEvent
     [SerializeField]
     public ParticleSystem clouds;
     public ParticleSystem debris;
-    public ParticleSystem wind;
-    public Light envLight;
+    public ParticleSystem wind;    
     public MinMaxParameter minMaxCloudsSpeed;
 
     bool stopped = false;
-    float envLightDefIntensity;
+    Light envLight;
 
     void Awake()
     {
-        OnAwake();
-        envLightDefIntensity = envLight.intensity;
+        OnAwake();        
     }
      
 
@@ -27,13 +25,17 @@ public class DynamicClouds : WeatherEvent
     {
         return false;
     }
-     
 
-    public override void StartEvent()
+
+    protected override void StartEventInternal()
     {
+        if (envLight == null)
+            envLight = WeatherController.instance.GetEnvironmentLight();
+
         IntensityUpdate(WeatherController.instance.GetEventIntensity());
 
         stopped = false;
+
         clouds.Play();
         debris.Play();
 
@@ -48,13 +50,18 @@ public class DynamicClouds : WeatherEvent
         WeatherController.instance.SetWindIntensity(0.8f); 
     }
 
-    public override void StopEvent()
+    protected override void StopEventInternal()
     {
         stopped = true;
+
         clouds.Stop();
         debris.Stop();
          
-        SetFloatParameterSmoothly(() => envLight.intensity, (value) => envLight.intensity = value, envLightDefIntensity, 0.5f);
+        SetFloatParameterSmoothly(
+            () => envLight.intensity, (value) => envLight.intensity = value, 
+            WeatherController.instance.GetEnvironmentLightDefaultIntensity(), 
+            0.5f);
+
         SetFloatParameterSmoothly(() => envLight.shadowStrength, (value) => envLight.shadowStrength = value, 0.0f, 0.5f);
 
         ModifyBackgroundAudioVolume(0.5f, false, true);
@@ -75,11 +82,7 @@ public class DynamicClouds : WeatherEvent
 
         WeatherController.instance.SetWindIntensity(0.5f + intensity * 0.3f);
     }
-
-    public override bool IsEventActive()
-    {
-        return clouds.isPlaying;
-    }
+     
 
     public override bool AllowIntensityChange() => true;
 

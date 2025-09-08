@@ -46,7 +46,7 @@ public class RainEvent : WeatherEvent
 
 
 
-    public override void StartEvent()
+    protected override void StartEventInternal()
     {
         //if (isStopping)
         //  return;
@@ -60,10 +60,10 @@ public class RainEvent : WeatherEvent
         StartBackgroundAudio();
         ModifyBackgroundAudioVolume(0.5f, true, false);
     }
-     
 
 
-    public override void StopEvent()
+
+    protected override void StopEventInternal()
     {
         //if (isStopping)
           //  return;
@@ -83,12 +83,7 @@ public class RainEvent : WeatherEvent
     {
         UpdateEmissionRate(intensity);
     }
-
-    public override bool IsEventActive()
-    {
-        return rain.gameObject.activeSelf;
-    }
-
+     
     private void UpdateEmissionRate(float intensity)
     {
         rainEmission.rateOverTime = minEmissionrate + intensity * (maxEmissionRate - minEmissionrate);

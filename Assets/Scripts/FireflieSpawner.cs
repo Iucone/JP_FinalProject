@@ -7,9 +7,11 @@ public class FireflieSpawner : MonoBehaviour
 
     public static FireflieSpawner instance { get; private set; }
 
-
+    [SerializeField]
     public GameObject firefliePrefab;
-    public int maxFireflies = 8;
+
+    [SerializeField]
+    private int maxFireflies = 8;
 
     private int curActiveFireflies = 0;
     private List<FireflieController>    fireflies = new List<FireflieController>();
@@ -29,15 +31,11 @@ public class FireflieSpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //fireflies = new GameObject[maxFireflies];
-        ///int 
-
-        AddFireflie();
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {/*
         if (Input.GetKeyDown(KeyCode.S))
         {
             AddFireflie();
@@ -48,11 +46,11 @@ public class FireflieSpawner : MonoBehaviour
         {
             StopFireflies();
         }
-
+        */
     }
 
 
-    private void AddFireflie()
+    public void AddFireflie()
     {
         //print("AddFireflie()");
         if (fireflies.Count >= maxFireflies)
@@ -62,7 +60,16 @@ public class FireflieSpawner : MonoBehaviour
         fireflies.Add( fireflie );
     }
 
-    private void StopFireflies()
+    public void RemoveFireflie()
+    {
+        if (fireflies.Count == 0)
+            return;
+
+        fireflies[0].Hide();
+    }
+
+
+    public void StopFireflies()
     {
         //print("StopFireflies()");
         foreach (FireflieController fireflie in fireflies)           
@@ -74,8 +81,11 @@ public class FireflieSpawner : MonoBehaviour
 
     public void    CanDestroyFirefile(FireflieController fireflie)
     {
-        print("CanDestroyFireflie()");
+        //print("CanDestroyFireflie()");
         Destroy(fireflie.gameObject);
         fireflies.Remove(fireflie);        
     }
+
+    public int  GetMaxFireflies() => maxFireflies;
+    public int GetCurrentActiveFireflies() => fireflies.Count;
 }

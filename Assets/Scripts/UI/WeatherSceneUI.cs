@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,10 +12,18 @@ public class WeatherSceneUI : MonoBehaviour
     TMP_Text eventDescUI;
     [SerializeField]
     Slider slider;
-
+    [SerializeField]
+    GameObject infoPanel, closedInfoPanel;
+    [SerializeField]
+    GameObject weatherEventButtonsParent;
 
 
     public static WeatherSceneUI instance { get; private set; }
+
+
+    //private List<Button> eventButtons = new List<Button>();
+    private Button[]        eventButtons = null;
+
 
 
     private void Awake()
@@ -26,6 +36,8 @@ public class WeatherSceneUI : MonoBehaviour
         }
 
         instance = this;
+
+        eventButtons = weatherEventButtonsParent.GetComponentsInChildren<Button>();
     }
 
 
@@ -67,6 +79,23 @@ public class WeatherSceneUI : MonoBehaviour
     }
 
 
+    private void DisableEventButtons()
+    {
+        foreach (Button button in eventButtons)
+        {
+            button.interactable = false;
+        }
+    }
+
+    private void EnableEventButtons()
+    {
+        foreach (Button button in eventButtons)
+        {
+            button.interactable = true;
+        }
+    }
+
+
     /// <summary>
     /// Buttons
     /// 
@@ -77,6 +106,8 @@ public class WeatherSceneUI : MonoBehaviour
 
     void SetEvent(WeatherEvent.EventName eventName)
     {
+        DisableEventButtons();
+        Invoke(nameof(EnableEventButtons), 2f);
         WeatherController.instance.StartEvent(eventName);
         eventNameUI.text = WeatherController.instance.GetCurrentEventName();
         eventDescUI.text = WeatherController.instance.GetCurrentEventDescription();
@@ -132,9 +163,43 @@ public class WeatherSceneUI : MonoBehaviour
         SetEvent(WeatherEvent.EventName.Tornado);
     }
 
+    public void OnNocturneButton()
+    {
+        SetEvent(WeatherEvent.EventName.NocturneMild);
+    }
 
     public void OnEventIntensitySlider(float value)
     {
         WeatherController.instance.SetIntensity(value);
+    }
+
+
+
+
+
+
+    public void OnCloseInfoPanel()
+    {
+        infoPanel.SetActive(false);
+        closedInfoPanel.SetActive(true);
+    }
+
+    public void OnOpenInfoPanel()
+    {
+        infoPanel.SetActive(true);
+        closedInfoPanel.SetActive(false);
+    }
+
+
+    public void OnExitApp()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; // Esce dalla Play Mode
+#elif UNITY_WEBGL
+        Application.OpenURL("https://google.com"); // WebGL non può chiudere l'app
+#else
+        Application.Quit(); // Chiude l'applicazione
+#endif
+
     }
 }

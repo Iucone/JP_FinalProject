@@ -15,20 +15,18 @@ public class StormEvent : WeatherEvent
     [SerializeField]
     public ParticleSystem rain, wind, fog;
     public GameObject lightningStrike;
-    public Light envLight;
 
     private EmissionModule rainEmission;
     private EmissionModule windEmission;
     private float envLightDefIntensity;
     //private AudioSource audioSource;
-
+    private Light envLight;
 
 
     void Awake()
     { 
         OnAwake();
-        //lightningStrike.SetActive(false);
-        envLightDefIntensity = envLight.intensity;
+        //lightningStrike.SetActive(false);        
         windEmission = wind.emission;
         rainEmission = rain.emission;
         //audioSource = GetComponents<AudioSource>();
@@ -36,9 +34,16 @@ public class StormEvent : WeatherEvent
         //audioSource.volume = 0f;
     }
 
+    private void Start()
+    {
+        envLightDefIntensity = WeatherController.instance.GetEnvironmentLightDefaultIntensity();
+    }
+
+
     private void Update()
     {
     }
+
 
 
     public override bool CanActivateEvent(WeatherState weather)
@@ -49,8 +54,11 @@ public class StormEvent : WeatherEvent
 
 
 
-    public override void StartEvent()
+    protected override void StartEventInternal()
     {
+        if (envLight == null)
+            envLight = WeatherController.instance.GetEnvironmentLight();
+
         rain.Play();
         wind.Play();
         var main = wind.main;
@@ -69,7 +77,7 @@ public class StormEvent : WeatherEvent
         //StartCoroutine(ModifiyAudioVolume(audioSource, 0.5f, true));
     }
 
-    public override void StopEvent()
+    protected override void StopEventInternal()
     {
         var main = wind.main;
         main.simulationSpeed = 3f;
@@ -105,12 +113,7 @@ public class StormEvent : WeatherEvent
     protected override void IntensityUpdate(float intensity)
     {
     }
-
-    public override bool IsEventActive()
-    {
-        return false;
-    }
-
+     
 
     public override bool AllowIntensityChange() => false;
 }
