@@ -33,6 +33,9 @@ public class TornadoEvent : WeatherEvent
 
     private void Update()
     {
+        if (!IsEventActive())
+            return;
+
         if (path.GetPoints() == null)
             return;
 
